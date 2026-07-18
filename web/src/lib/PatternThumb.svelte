@@ -142,6 +142,8 @@
       observer.disconnect()
       stopAnimation()
       cancelGeneration()
+      // Close generated bitmaps to free GPU/memory resources
+      for (const bmp of frames) bmp.close()
     }
   })
 </script>

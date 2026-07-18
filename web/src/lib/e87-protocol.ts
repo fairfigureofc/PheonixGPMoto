@@ -452,6 +452,11 @@ export async function connectE87(log?: (msg: string) => void): Promise<E87Connec
     // Track whether the GATT server fires a disconnect event during this attempt
     let disconnectedDuringAttempt = false
 
+    const onDisconnect = () => {
+      disconnectedDuringAttempt = true
+      log?.('GATT server reported disconnected event during connect attempt.')
+    }
+
     try {
       log?.(`GATT connect attempt ${attempt}/${MAX_ATTEMPTS}...`)
 
@@ -460,11 +465,6 @@ export async function connectE87(log?: (msg: string) => void): Promise<E87Connec
       if (server) {
         try { device.gatt?.disconnect() } catch { /* ignore */ }
         server = null
-      }
-
-      const onDisconnect = () => {
-        disconnectedDuringAttempt = true
-        log?.('GATT server reported disconnected event during connect attempt.')
       }
 
       // ── Step 1: connect() ──
@@ -494,6 +494,9 @@ export async function connectE87(log?: (msg: string) => void): Promise<E87Connec
     } catch (err) {
       const msg = (err as Error).message
       log?.(`GATT attempt ${attempt} failed: ${msg}`)
+
+      // Remove the disconnect listener from this failed attempt
+      try { device.removeEventListener('gattserverdisconnected', onDisconnect) } catch { /* ignore */ }
 
       // Tear down cleanly so the OS can release BLE resources
       try { server?.disconnect() } catch { /* ignore */ }
