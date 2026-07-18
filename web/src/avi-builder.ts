@@ -151,7 +151,8 @@ export function buildMjpgAvi(
 ): Uint8Array {
   const width = options.width ?? 368
   const height = options.height ?? 368
-  const fps = options.fps ?? (rawFrames.length <= 6 ? 1 : 12)
+  const fps = Math.max(1, Math.min(120, Math.round(options.fps ?? (rawFrames.length <= 6 ? 1 : 12))))
+  if (rawFrames.length === 0) throw new Error('buildMjpgAvi: no frames provided')
 
   // Strip browser-injected ICC/EXIF/Photoshop APP segments BEFORE muxing -
   // the Jieli decoder otherwise renders only the first few rows.

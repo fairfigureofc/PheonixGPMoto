@@ -191,9 +191,9 @@
     const pat = urlParams.get('pattern')
     if (pat) saved.selectedPatternId = pat
     const frames = urlParams.get('frames')
-    if (frames && Number.isFinite(+frames)) saved.patternFrameCount = +frames
+    if (frames && Number.isFinite(+frames) && +frames > 0 && +frames <= 999) saved.patternFrameCount = +frames
     const fps = urlParams.get('fps')
-    if (fps && Number.isFinite(+fps)) saved.patternFps = +fps
+    if (fps && Number.isFinite(+fps) && +fps > 0 && +fps <= 120) saved.patternFps = +fps
   }
 
   // HTTP-fallback transport: when Web Bluetooth isn't available (Safari) we
