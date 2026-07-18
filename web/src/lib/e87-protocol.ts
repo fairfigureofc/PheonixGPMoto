@@ -403,7 +403,12 @@ export async function connectE87(log?: (msg: string) => void): Promise<E87Connec
   }
 
   const device = await navigator.bluetooth.requestDevice({
-    filters: [{ namePrefix: 'E87' }],
+    filters: [
+      { namePrefix: 'E87' },
+      { namePrefix: 'L8' },
+      { namePrefix: 'X9' },
+      { namePrefix: 'LED Badge' },
+    ],
     optionalServices: SERVICE_CANDIDATES,
   })
 
@@ -1788,6 +1793,10 @@ export async function writeFileE87(opts: UploadOptions): Promise<void> {
 
       await sendE87Frame(0x00, 0x1c, Uint8Array.of(0x00, deviceSeq1c))
       log(`Sent cmd 0x1C response${statusByte === 0x00 ? '. Upload complete!' : ' (acknowledging error).'}`)
+
+      if (statusByte !== 0x00) {
+        throw new Error(`Device reported upload error: ${statusStr} (0x${statusByte.toString(16)})`)
+      }
     }
 
     // The device ALWAYS sends a window ack (flag=0x80, cmd=0x1d) to start

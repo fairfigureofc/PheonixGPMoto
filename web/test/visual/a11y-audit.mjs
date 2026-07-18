@@ -36,7 +36,7 @@ async function audit(viewport, name, theme) {
   await page.goto(URL, { waitUntil: 'networkidle' })
   await page.waitForTimeout(800)
 
-  for (const mode of ['Pattern', 'Text']) {
+  for (const mode of ['Pattern', 'Text', 'Image', 'Sequence', 'Video', 'QR']) {
     if (mode !== 'Pattern') await clickTab(page, mode)
     await page.waitForTimeout(400)
     const tag = `${name}-${theme}-${mode.toLowerCase()}`

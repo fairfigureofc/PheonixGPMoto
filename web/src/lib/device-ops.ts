@@ -77,6 +77,10 @@ export function createDeviceOps(cb: DeviceOpsCallbacks): DeviceOps {
     getSmallFiles,
   } = cb
 
+  // Execution lock to prevent concurrent BLE operations from interleaving
+  // commands and corrupting the shared notification queue.
+  let isExecuting = false
+
   /**
    * Wraps a single connection-bound device op with the standard
    * "not-connected guard + busy flag + try/catch with status + log"
@@ -90,11 +94,16 @@ export function createDeviceOps(cb: DeviceOpsCallbacks): DeviceOps {
     errorPrefix: string,
     fn: (c: E87Connection) => Promise<void>,
   ): Promise<void> {
+    if (isExecuting) {
+      log(`${errorPrefix}: operation already in progress, skipping.`)
+      return
+    }
     const conn = getConnection()
     if (!conn) {
       setStatus('Not connected.')
       return
     }
+    isExecuting = true
     setBusy(true)
     try {
       await fn(conn)
@@ -103,6 +112,7 @@ export function createDeviceOps(cb: DeviceOpsCallbacks): DeviceOps {
       setStatus(msg)
       log(msg)
     } finally {
+      isExecuting = false
       setBusy(false)
     }
   }

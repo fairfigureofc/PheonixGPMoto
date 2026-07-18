@@ -260,49 +260,58 @@ export async function videoToPreviewBitmaps(
   video.playsInline = true
   video.preload = 'auto'
 
-  await new Promise<void>((resolve, reject) => {
-    video.onloadedmetadata = () => resolve()
-    video.onerror = () => reject(new Error('Failed to load video'))
-    video.src = url
-  })
+  try {
+    await new Promise<void>((resolve, reject) => {
+      video.onloadedmetadata = () => resolve()
+      video.onerror = () => reject(new Error('Failed to load video'))
+      video.src = url
+    })
 
-  const start = Math.max(0, trimStart)
-  const end = Math.max(start, trimEnd)
-  const duration = Math.max(0, end - start)
-  const requestedFps = Math.max(1, fps)
-  const expectedFrames = Math.ceil(duration * requestedFps)
-  const targetFrames = Math.max(1, maxFrames ? Math.min(expectedFrames, maxFrames) : expectedFrames)
-  const step = targetFrames <= 1 ? 0 : duration / (targetFrames - 1)
-  log?.(`Extracting ${targetFrames} cached preview frames at ${requestedFps}fps...`)
+    const start = Math.max(0, trimStart)
+    const end = Math.max(start, trimEnd)
+    const duration = Math.max(0, end - start)
+    const requestedFps = Math.max(1, fps)
+    const expectedFrames = Math.ceil(duration * requestedFps)
+    const targetFrames = Math.max(1, maxFrames ? Math.min(expectedFrames, maxFrames) : expectedFrames)
+    const step = targetFrames <= 1 ? 0 : duration / (targetFrames - 1)
+    log?.(`Extracting ${targetFrames} cached preview frames at ${requestedFps}fps...`)
 
-  const canvas = new OffscreenCanvas(previewSize, previewSize)
-  const ctx = canvas.getContext('2d')
-  if (!ctx) throw new Error('Could not create 2D canvas context.')
+    const canvas = new OffscreenCanvas(previewSize, previewSize)
+    const ctx = canvas.getContext('2d')
+    if (!ctx) throw new Error('Could not create 2D canvas context.')
 
-  const srcFullW = video.videoWidth
-  const srcFullH = video.videoHeight
-  const minDim = Math.min(srcFullW, srcFullH)
-  const cropX = (srcFullW - minDim) / 2
-  const cropY = (srcFullH - minDim) / 2
+    const srcFullW = video.videoWidth
+    const srcFullH = video.videoHeight
+    const minDim = Math.min(srcFullW, srcFullH)
+    const cropX = (srcFullW - minDim) / 2
+    const cropY = (srcFullH - minDim) / 2
 
-  const frames: ImageBitmap[] = []
-  const progressStep = Math.max(1, Math.floor(targetFrames / 20))
-  for (let i = 0; i < targetFrames; i++) {
-    const t = Math.min(end, start + i * step)
-    video.currentTime = t
-    await new Promise<void>((r) => { video.onseeked = () => r() })
+    const frames: ImageBitmap[] = []
+    const progressStep = Math.max(1, Math.floor(targetFrames / 20))
+    for (let i = 0; i < targetFrames; i++) {
+      const t = Math.min(end, start + i * step)
+      video.currentTime = t
+      await new Promise<void>((resolve, reject) => {
+        const timeout = setTimeout(() => reject(new Error(`Video seek timed out at t=${t.toFixed(2)}s`)), 5000)
+        video.onseeked = () => { clearTimeout(timeout); resolve() }
+        video.onerror = () => { clearTimeout(timeout); reject(new Error('Video seek error')) }
+      })
 
-    ctx.fillStyle = 'black'
-    ctx.fillRect(0, 0, previewSize, previewSize)
-    ctx.drawImage(video, cropX, cropY, minDim, minDim, 0, 0, previewSize, previewSize)
-    frames.push(await createImageBitmap(canvas))
+      ctx.fillStyle = 'black'
+      ctx.fillRect(0, 0, previewSize, previewSize)
+      ctx.drawImage(video, cropX, cropY, minDim, minDim, 0, 0, previewSize, previewSize)
+      frames.push(await createImageBitmap(canvas))
 
-    if ((i + 1) % progressStep === 0 || i + 1 === targetFrames) {
-      const percent = Math.round(((i + 1) / targetFrames) * 100)
-      log?.(`  Cached ${i + 1}/${targetFrames} frames (${percent}%)...`)
+      if ((i + 1) % progressStep === 0 || i + 1 === targetFrames) {
+        const percent = Math.round(((i + 1) / targetFrames) * 100)
+        log?.(`  Cached ${i + 1}/${targetFrames} frames (${percent}%)...`)
+      }
     }
-  }
 
-  URL.revokeObjectURL(url)
-  return frames
+    return frames
+  } catch (err) {
+    throw err
+  } finally {
+    URL.revokeObjectURL(url)
+  }
 }
