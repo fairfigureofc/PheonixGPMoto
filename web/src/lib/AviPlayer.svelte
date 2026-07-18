@@ -111,11 +111,24 @@
     if (frames.length === 0) return
     stop()
     // Wait a tick for canvas to bind
-    requestAnimationFrame(() => {
+    const id = requestAnimationFrame(() => {
       drawFrame(0)
       play()
     })
+    // Track so cleanup can cancel if component unmounts before tick fires
+    animId = id
   }
+
+  // Cleanup on unmount: cancel any pending RAF
+  $effect(() => {
+    return () => {
+      if (animId !== null) {
+        cancelAnimationFrame(animId)
+        animId = null
+      }
+      playing = false
+    }
+  })
 </script>
 
 {#if frames.length > 0}
