@@ -2,11 +2,23 @@
 // Capture frames from arcradar.online via Playwright and compare them
 // against our generated pattern frames at /tmp/auracast-audit/visuals/
 // Outputs a side-by-side strip to /tmp/arc-compare.png
+//
+// NOTE: This script requires macOS (uses `sips`) and Python 3 with Pillow.
+// It is a developer-only comparison tool, not part of CI.
 import { chromium } from 'playwright'
 import { writeFileSync, mkdirSync, readFileSync, existsSync } from 'node:fs'
 import { execSync } from 'node:child_process'
+import { tmpdir } from 'node:os'
+import { join } from 'node:path'
 
-const OUT = '/tmp/arc-compare'
+const platform = process.platform
+if (platform !== 'darwin') {
+  console.error(`⚠️  compare-arc-radar.mjs uses macOS-only tools (sips). Current platform: ${platform}`)
+  console.error('   Skipping. Run on macOS or adapt the resize step for your platform.')
+  process.exit(0)
+}
+
+const OUT = join(tmpdir(), 'arc-compare')
 mkdirSync(OUT, { recursive: true })
 
 const FRAME_COUNT = 8

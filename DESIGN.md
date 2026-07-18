@@ -424,9 +424,11 @@ help dialog.
 
 ## What we deliberately rejected
 
-- We do **not** ship a light theme. The badge itself is a black puck and the
-  product is used in dark rooms (conferences, conventions). Every screen is
-  designed dark-first and dark-only.
+- We do **not** ship a light theme as the primary experience. The badge itself
+  is a black puck and the product is used in dark rooms (conferences,
+  conventions). Every screen is designed dark-first. A light theme is available
+  via the theme toggle for accessibility and user preference, but dark mode is
+  the default and the design reference.
 - We do **not** use a third-party Material library. The token CSS is generated
   at build time from `@material/material-color-utilities`, then Tailwind maps
   every utility class to a `--md-sys-*` CSS var. Components are hand-built in

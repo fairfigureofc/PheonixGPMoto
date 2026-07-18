@@ -231,10 +231,9 @@ Body structure:
 | Offset | Size | Value | Description |
 |---|---|---|---|
 | 0 | 1 | seqCounter | Sequence (0x05) |
-| 1 | 1 | `0x00` | Reserved |
-| 2 | 1 | `0x00` | Reserved |
-| 3 | 2 | `size >> 8, size & 0xFF` | File size, **big-endian 16-bit** |
-| 5 | 4 | random | Token (4 random bytes) |
+| 1 | 4 | `(size >> 24) & 0xFF, ...` | File size, **big-endian 32-bit** |
+| 5 | 2 | `(crc >> 8) & 0xFF, crc & 0xFF` | CRC-16/XMODEM of file payload |
+| 7 | 2 | random | Padding (2 random bytes) |
 | 9 | N | ASCII | Temp filename (e.g., `b938e1.tmp`) |
 | 9+N | 1 | `0x00` | Null terminator |
 

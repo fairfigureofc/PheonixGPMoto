@@ -116,11 +116,11 @@ If your badge is:
 
 ### Python relay (for Safari / Firefox / iPhone)
 
-```bash
-cd web && pip install -r requirements.txt && python server.py
-```
-
-Then open `http://<your-ip>:8000` on any device. The relay handles Bluetooth on behalf of the browser.
+> **Note:** The Python relay is planned but not yet included in this repository.
+> For now, only browsers with native Web Bluetooth support (Chrome, Edge, Brave,
+> Arc, Opera on desktop and Android) can communicate directly with the badge.
+> Safari, Firefox, and iOS Chrome users should use a Chromium-based browser on a
+> supported platform.
 
 ---
 

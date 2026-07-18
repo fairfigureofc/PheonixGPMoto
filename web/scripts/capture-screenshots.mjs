@@ -1,7 +1,7 @@
 import { chromium } from '@playwright/test';
 import { join } from 'path';
 
-const BASE = 'https://localhost:4175';
+const BASE = process.env.AUDIT_URL || 'https://localhost:4173';
 const OUT = join(import.meta.dirname, '..', 'docs', 'screenshots');
 
 async function main() {

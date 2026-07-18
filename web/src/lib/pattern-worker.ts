@@ -55,11 +55,11 @@ self.onmessage = (e: MessageEvent<InMsg>) => {
 
 async function runGenerate(msg: GenerateMsg) {
   const { jobId, patternId, frames, fps } = msg
-  const gen = GENERATORS[patternId]
-  if (!gen) {
+  if (!Object.prototype.hasOwnProperty.call(GENERATORS, patternId)) {
     post({ type: 'error', jobId, message: `Unknown pattern: ${patternId}` })
     return
   }
+  const gen = GENERATORS[patternId]
 
   try {
     // The generator returns all frames at once. We post each frame
