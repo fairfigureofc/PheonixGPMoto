@@ -288,29 +288,33 @@ export async function videoToPreviewBitmaps(
 
     const frames: ImageBitmap[] = []
     const progressStep = Math.max(1, Math.floor(targetFrames / 20))
-    for (let i = 0; i < targetFrames; i++) {
-      const t = Math.min(end, start + i * step)
-      video.currentTime = t
-      await new Promise<void>((resolve, reject) => {
-        const timeout = setTimeout(() => reject(new Error(`Video seek timed out at t=${t.toFixed(2)}s`)), 5000)
-        video.onseeked = () => { clearTimeout(timeout); resolve() }
-        video.onerror = () => { clearTimeout(timeout); reject(new Error('Video seek error')) }
-      })
+    try {
+      for (let i = 0; i < targetFrames; i++) {
+        const t = Math.min(end, start + i * step)
+        video.currentTime = t
+        await new Promise<void>((resolve, reject) => {
+          const timeout = setTimeout(() => reject(new Error(`Video seek timed out at t=${t.toFixed(2)}s`)), 5000)
+          video.onseeked = () => { clearTimeout(timeout); resolve() }
+          video.onerror = () => { clearTimeout(timeout); reject(new Error('Video seek error')) }
+        })
 
-      ctx.fillStyle = 'black'
-      ctx.fillRect(0, 0, previewSize, previewSize)
-      ctx.drawImage(video, cropX, cropY, minDim, minDim, 0, 0, previewSize, previewSize)
-      frames.push(await createImageBitmap(canvas))
+        ctx.fillStyle = 'black'
+        ctx.fillRect(0, 0, previewSize, previewSize)
+        ctx.drawImage(video, cropX, cropY, minDim, minDim, 0, 0, previewSize, previewSize)
+        frames.push(await createImageBitmap(canvas))
 
-      if ((i + 1) % progressStep === 0 || i + 1 === targetFrames) {
-        const percent = Math.round(((i + 1) / targetFrames) * 100)
-        log?.(`  Cached ${i + 1}/${targetFrames} frames (${percent}%)...`)
+        if ((i + 1) % progressStep === 0 || i + 1 === targetFrames) {
+          const percent = Math.round(((i + 1) / targetFrames) * 100)
+          log?.(`  Cached ${i + 1}/${targetFrames} frames (${percent}%)...`)
+        }
       }
+    } catch (err) {
+      // Close any partially-extracted bitmaps to prevent memory leaks
+      for (const bmp of frames) bmp.close()
+      throw err
     }
 
     return frames
-  } catch (err) {
-    throw err
   } finally {
     URL.revokeObjectURL(url)
   }

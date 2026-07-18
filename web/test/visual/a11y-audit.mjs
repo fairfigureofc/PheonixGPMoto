@@ -1,6 +1,6 @@
 /**
  * Accessibility audit: runs axe-core against the live app at multiple
- * viewports + theme combinations, plus the major mode tabs (Pattern/Text).
+ * viewports + theme combinations, plus the major mode tabs.
  * Exits non-zero if any 'serious' or 'critical' violations are found.
  *
  * Usage: AUDIT_URL=https://localhost:5173/ node test/visual/a11y-audit.mjs
@@ -8,23 +8,34 @@
 import { chromium } from 'playwright'
 import { AxeBuilder } from '@axe-core/playwright'
 import fs from 'fs'
+import { tmpdir } from 'os'
+import { join } from 'path'
 
 const URL = process.env.AUDIT_URL || 'https://localhost:5174/'
-const OUT = '/tmp/auracast-audit/a11y'
+const OUT = join(tmpdir(), 'auracast-audit', 'a11y')
 fs.mkdirSync(OUT, { recursive: true })
 
 const browser = await chromium.launch()
 const allViolations = []
 
 async function clickTab(page, label) {
-  const tabs = page.locator('button,[role="tab"]').filter({ hasText: new RegExp(`^${label}$`) })
+  // Match by aria-label for reliability (button text includes icon ligatures)
+  const tab = page.locator(`button[aria-label="${label}"], [role="tab"][aria-label="${label}"]`).first()
+  if (await tab.isVisible({ timeout: 2000 }).catch(() => false)) {
+    await tab.click()
+    await page.waitForTimeout(500)
+    return true
+  }
+  // Fallback: try text content match
+  const tabs = page.locator('button,[role="tab"]').filter({ hasText: label })
   const n = await tabs.count()
   for (let i = 0; i < n; i++) {
     const t = tabs.nth(i)
-    if ((await t.textContent())?.trim() === label && await t.isVisible()) {
+    if (await t.isVisible()) {
       await t.click(); await page.waitForTimeout(500); return true
     }
   }
+  console.warn(`  ⚠️ Could not find tab "${label}"`)
   return false
 }
 
@@ -36,8 +47,8 @@ async function audit(viewport, name, theme) {
   await page.goto(URL, { waitUntil: 'networkidle' })
   await page.waitForTimeout(800)
 
-  for (const mode of ['Pattern', 'Text', 'Image', 'Sequence', 'Video', 'QR']) {
-    if (mode !== 'Pattern') await clickTab(page, mode)
+  for (const mode of ['Patterns', 'Text', 'Image', 'Sequence', 'Video', 'GIF', 'QR code']) {
+    if (mode !== 'Patterns') await clickTab(page, mode)
     await page.waitForTimeout(400)
     const tag = `${name}-${theme}-${mode.toLowerCase()}`
     const result = await new AxeBuilder({ page })
