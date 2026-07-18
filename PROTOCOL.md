@@ -222,7 +222,7 @@ RX: FE DC BA 00 27 00 04 00 [seq] 00 01 EF
 ### Phase 8: cmd 0x1B - File Metadata
 
 ```
-TX: FE DC BA C0 1B 00 14 [seq] 00 00 [size_BE16] [token*4] [name...] 00 EF
+TX: FE DC BA C0 1B 00 14 [seq] [size_BE32] [crc16_BE] [rand*2] [name...] 00 EF
 RX: FE DC BA 00 1B 00 04 00 [seq] 01 EA EF
 ```
 

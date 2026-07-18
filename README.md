@@ -38,7 +38,7 @@
 
 That's it. The image appears on your badge in seconds.
 
-> **iPhone / Safari / Firefox?** Web Bluetooth isn't available in those browsers. Run the included Python relay on any Mac/PC/Linux and every device on the same Wi-Fi can use AuraCast. See [Browser Support](#browser-support).
+> **iPhone / Safari / Firefox?** Web Bluetooth isn't available in those browsers. A Python relay is planned but not yet included. For now, use a Chromium-based browser (Chrome, Edge, Brave, Arc, Opera) on a supported platform. See [Browser Support](#browser-support).
 
 ---
 

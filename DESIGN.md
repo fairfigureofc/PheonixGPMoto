@@ -5,9 +5,10 @@ description: >-
   smart badge. It writes still images, animations, sequences, marquee text, and QR
   codes to the badge's 368 × 368 OLED over Bluetooth (Web Bluetooth in browsers
   that support it, or a small FastAPI backend on macOS Safari). The product is
-  built around Google Material 3 Expressive in a single dark theme — a deep navy
+  built around Google Material 3 Expressive with a dark-first theme — a deep navy
   surface stack, a bright cyan primary, and a vivid violet tertiary that together
-  echo the badge's neon ring at full brightness.
+  echo the badge's neon ring at full brightness. A light theme is available via
+  the theme toggle for accessibility.
 mode: dark
 seeds:
   primary: "#00f2ff"
