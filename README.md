@@ -1,232 +1,76 @@
 # PheonixGPMoto
 
-An iPhone-driven motorcycle navigation display built on the E87 electronic
-display badge. The native Swift proof of concept and BLE refresh benchmark live
-in [`ios/`](./ios/).
+PheonixGPMoto is a proof-of-concept for a simple, distraction-free GPS navigation
+badge for motorcycles and bicycles.
 
-This project started from the open-source AuraCast E87/L8 protocol implementation;
-the original documentation is preserved below for protocol and hardware reference.
+Choose a destination in the iPhone app, start the ride, and put the phone away.
+The clip-on E87 display badge presents only the turn information needed for the
+road ahead—such as the next direction and distance—without a map, notifications,
+or another attention-heavy screen.
 
----
+## The idea
 
-<div align="center">
+- Enter a destination before riding.
+- Clip the compact display somewhere visible.
+- Put the phone safely in a pocket or bag.
+- Follow minimal turn-by-turn prompts on the badge.
 
-<img src="docs/screenshots/hero-dark.png" alt="AuraCast - Pattern picker with 29 animated patterns" width="800" />
+The goal is intentionally narrow: provide enough information to navigate while
+keeping the rider's attention on the road.
 
-# ✦ AuraCast
+## Current status
 
-### The open-source web app for round LED smart badges
+This repository is an early hardware and transport experiment. The native iOS
+benchmark currently focuses on the riskiest technical question: how quickly and
+reliably an iPhone can refresh navigation-style images on an E87/L8 electronic
+display badge over Bluetooth Low Energy.
 
-**Upload custom images, GIFs, animations, scrolling text, patterns, and QR codes — straight from your browser. No app store. No USB cable. No account.**
+The proof of concept includes:
 
-[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![Built with Svelte 5](https://img.shields.io/badge/built%20with-Svelte%205-ff3e00.svg)](https://svelte.dev)
-[![Web Bluetooth](https://img.shields.io/badge/Web%20Bluetooth-BLE-4285F4.svg)](#browser-support)
-[![GitHub Pages](https://img.shields.io/badge/live-auracast.app-00f2ff.svg)](https://manaiakalani.github.io/auracast/)
+- Native SwiftUI interface
+- CoreBluetooth discovery and connection
+- Jieli RCSP authentication
+- Windowed JPEG transfer to the E87 badge
+- Minimal 368×368 navigation-arrow rendering
+- Configurable refresh-cadence benchmarking
+- Per-update encoding, BLE transfer, average, and p95 timing metrics
 
-</div>
+See the [iOS prototype instructions](./ios/README.md) to build and run the current
+benchmark on a physical iPhone.
 
----
+## Intended direction
 
-> ### Just bought a round LED badge?
->
-> The round LED smart badges sold on **Amazon**, **AliExpress**, **Temu**, and **TikTok Shop** as:
->
-> **E87** · **L8** · **X9** · **LED Smart Badge** · **Anime Smart Badge** · **Anime LED Pin** · **Aura Badge** · **DIY Light Up Pin** · **Wearable Display Pin** · **Round LED Name Tag** · **Smart LED Bluetooth Pin** · **Akinokai Display Pin** · **384x384 Round Pin** · **Programmable LED Badge** · **Custom Image Pin** · **Anime LED Lapel Pin** · **HiBadge** · **Bluetooth LED Pin** · **Round OLED Badge**
->
-> ...all use the same Jieli BLE chip and speak the same protocol. If you have one of these, **AuraCast works with it.**
->
-> The stock **Zrun** app (also shipped as "LED Badge", "HiBadge", "Badgy") is buggy, ad-filled, and barely works on iOS. AuraCast is the open-source replacement.
+Once the badge refresh rate is validated on hardware, the next phase is to add:
 
----
+- Destination search and route calculation
+- GPS and heading updates
+- Simple next-maneuver graphics
+- Distance-to-turn updates
+- Adaptive refresh intervals to reduce battery and BLE traffic
+- A ride mode designed to work while the phone remains put away
 
-## Quick Start
+This is a proof of concept and should not be treated as a safety-certified
+navigation device. Riders remain responsible for road awareness and safe vehicle
+operation.
 
-1. **Press the side button** on your badge to wake it up
-2. **Open AuraCast** in Chrome, Edge, Brave, Arc, or Opera — [launch it here](https://manaiakalani.github.io/auracast/)
-3. **Click Connect** and pick your badge (`E87` or `L8...`) from the Bluetooth picker
-4. **Drag in an image**, pick a pattern, type some text, or import a GIF — then click **Send**
+## Hardware
 
-That's it. The image appears on your badge in seconds.
+The current target is the round E87/L8 family of Bluetooth electronic display
+badges using the Jieli BLE protocol. Protocol notes are retained in
+[PROTOCOL.md](./PROTOCOL.md), with reverse-engineering material under
+[`protocol-understanding/`](./protocol-understanding/).
 
-> **iPhone / Safari / Firefox?** Web Bluetooth isn't available in those browsers. A Python relay is planned but not yet included. For now, use a Chromium-based browser (Chrome, Edge, Brave, Arc, Opera) on a supported platform. See [Browser Support](#browser-support).
+## Acknowledgments
 
----
+PheonixGPMoto began with the open-source
+[AuraCast](https://github.com/Manaiakalani/auracast) codebase. We are grateful to
+the AuraCast contributors for the original E87/L8 connectivity implementation,
+Jieli authentication work, BLE upload flow, and protocol documentation that made
+this experiment possible.
 
-## Features
-
-| | Feature | Details |
-|---|---|---|
-| ✨ | **29 animated patterns** | Matrix Rain, Aurora Ribbons, Fireworks, Clock Face, Flow Field, Reaction Diffusion, Voronoi Crystals, Kaleidoscope, Danmaku, and more. All procedurally generated as seamless loops. |
-| 🖼️ | **Image upload** | Drag-and-drop JPEG, PNG, WebP, or HEIC. Auto-cropped and fitted to the badge's circular 368x368 OLED display. |
-| 🎞️ | **GIF import** | Drop an animated GIF — frames are decoded, circular-cropped, and packed as a looping MJPEG animation on the badge. |
-| 🔤 | **Text effects** | Scrolling marquee, static text, rainbow, glitch, and danmaku modes. Custom colors, fonts, sizes. |
-| 🎬 | **Video clips** | Trim MP4/MOV clips to fit the badge's 900 KB storage. Frame-by-frame preview before sending. |
-| 📱 | **QR codes** | High-contrast circular QR codes that scan right off the badge. |
-| 🖼️ | **Image sequences** | Multi-frame slideshows that loop on-device. |
-| 🔋 | **Battery + charging** | Live battery percentage with charging state indicator. |
-| 🔆 | **Brightness control** | Adjust badge screen brightness via slider. |
-| 🩺 | **Diagnostics** | One-click connection probe for troubleshooting. |
-| 🌗 | **Material 3 design** | Dark/light theme with M3 Expressive design tokens. |
-| 📲 | **PWA install** | Install as a home-screen app on any device. |
-| 🔒 | **Fully private** | Zero analytics. Zero cookies. Zero tracking. Zero network requests beyond your own badge. |
-
-<div align="center">
-<table>
-<tr>
-<td align="center"><img src="docs/screenshots/desktop-pattern.png" width="380" alt="Pattern mode" /></td>
-<td align="center"><img src="docs/screenshots/desktop-text.png" width="380" alt="Text mode" /></td>
-</tr>
-<tr>
-<td align="center">Pattern mode — 29 animated loops</td>
-<td align="center">Text mode — scrolling, glitch, rainbow</td>
-</tr>
-<tr>
-<td align="center"><img src="docs/screenshots/desktop-image.png" width="380" alt="Image upload" /></td>
-<td align="center"><img src="docs/screenshots/desktop-video.png" width="380" alt="Video clips" /></td>
-</tr>
-<tr>
-<td align="center">Image upload with circular crop</td>
-<td align="center">Video clip trimmer</td>
-</tr>
-</table>
-</div>
-
-<details>
-<summary><strong>Mobile UI</strong></summary>
-<br/>
-<div align="center">
-<img src="docs/screenshots/mobile.png" width="300" alt="AuraCast mobile UI" />
-</div>
-</details>
-
----
-
-## Is My Badge Supported?
-
-If your badge is:
-- **Round** (35-45 mm diameter)
-- Connects via **Bluetooth Low Energy** (advertises as `E87`, `L8`, `X9`, or `LED Badge`)
-- Came with the **Zrun** / **HiBadge** / **LED Badge** app
-- Has a **full-color OLED/LCD display** (not a monochrome scrolling text badge)
-
-...it almost certainly works. All these listings use the same **Jieli BR23** chipset.
-
-> **Not supported:** Square scrolling-text badges (64x16, 32x8 pixel) use a different protocol entirely. See [badgemagic](https://github.com/jnesselr/badge_magic) for those.
-
----
-
-## Browser Support
-
-| Browser | Platform | Method |
-|---|---|---|
-| Chrome / Edge / Brave / Arc / Opera | Windows, macOS, Linux, Android, ChromeOS | Direct Web Bluetooth |
-| Safari | macOS, iOS, iPadOS | Via Python relay (Wi-Fi) |
-| Firefox | All | Via Python relay (Wi-Fi) |
-| Chrome on iOS | iOS | Via Python relay (iOS Chrome = WebKit) |
-
-### Python relay (for Safari / Firefox / iPhone)
-
-> **Note:** The Python relay is planned but not yet included in this repository.
-> For now, only browsers with native Web Bluetooth support (Chrome, Edge, Brave,
-> Arc, Opera on desktop and Android) can communicate directly with the badge.
-> Safari, Firefox, and iOS Chrome users should use a Chromium-based browser on a
-> supported platform.
-
----
-
-## Development
-
-```bash
-# Clone
-git clone https://github.com/Manaiakalani/auracast.git
-cd auracast/web
-
-# Install
-npm install
-
-# Dev server (HTTPS required for Web Bluetooth)
-npm run dev
-
-# Production build
-npm run build
-```
-
-### Project Structure
-
-```
-auracast/
-├── README.md                ← You are here
-├── PROTOCOL.md              ← Full BLE protocol reverse-engineering
-├── DESIGN.md                ← Brand + design system spec
-├── LICENSE                  ← MIT License
-├── web/                     ← Svelte 5 web app
-│   ├── src/
-│   │   ├── App.svelte               Main app shell
-│   │   ├── lib/                     Components, protocol, modes
-│   │   ├── patterns/                29 procedural pattern generators
-│   │   └── ...
-│   └── README.md                    Web-specific build details
-├── protocol-understanding/  ← Raw BLE captures + analysis
-└── docs/screenshots/        ← App screenshots
-```
-
----
-
-## Why Not Just Use the Zrun App?
-
-| Zrun pain point | AuraCast |
-|---|---|
-| iOS Bluetooth permissions fail silently | Standard Web Bluetooth or Wi-Fi relay |
-| Crashes on uploads over ~200 KB | Streaming uploader with retries, tested to 900 KB |
-| Fills flash storage, refuses new uploads | Single-slot overwrite — always room for next upload |
-| Locked to whichever app the seller bundled | One app for every rebrand of the same chipset |
-| Ads, account signup, telemetry | Zero ads, zero tracking, zero accounts, fully local |
-| Closed source | MIT-licensed, fully auditable, PRs welcome |
-
----
-
-## Protocol Documentation
-
-The complete BLE protocol reverse-engineering — every byte of the FE/DC/BA framing, Jieli RCSP authentication handshake, file metadata, windowed data transfer, CRC, and capture format — lives in **[PROTOCOL.md](./PROTOCOL.md)**.
-
----
-
-## Credits
-
-<table>
-<tr>
-<td align="center" width="50%">
-  <strong>Protocol cracked open by</strong><br/><br/>
-  <a href="https://github.com/jumpingmushroom"><img src="https://github.com/jumpingmushroom.png" width="80" style="border-radius:50%" /></a><br/>
-  <a href="https://github.com/jumpingmushroom"><strong>@jumpingmushroom</strong></a><br/>
-  <sub>Python e87_badge library, protocol analysis, GIF support, Home Assistant integration</sub>
-</td>
-<td align="center" width="50%">
-  <strong>Web Bluetooth bones by</strong><br/><br/>
-  <a href="https://github.com/hybridherbst"><img src="https://github.com/hybridherbst.png" width="80" style="border-radius:50%" /></a><br/>
-  <a href="https://github.com/hybridherbst"><strong>@hybridherbst</strong></a><br/>
-  <sub>Original web uploader, BLE reverse-engineering, Jieli RCSP auth, MJPEG streaming</sub>
-</td>
-</tr>
-</table>
-
-Built on their shoulders. Painted in Material 3. Shipped over MJPEG.
-
----
+PheonixGPMoto is an independent proof-of-concept project and is not affiliated
+with or endorsed by AuraCast.
 
 ## License
 
-[MIT](./LICENSE) — use it however you want.
-
----
-
-<div align="center">
-
-**[AuraCast](https://manaiakalani.github.io/auracast/)** — the open badge uploader
-
-<sub>
-Keywords: E87 smart badge · L8 LED badge · X9 LED pin · round LED badge · anime badge app · LED smart pin · Zrun alternative · Zrun replacement · HiBadge alternative · Web Bluetooth badge · BLE LED badge · programmable LED pin · round OLED badge · anime LED lapel pin · Akinokai badge · Jieli badge · custom badge uploader · AuraCast
-</sub>
-
-</div>
+This project retains the original repository's [MIT License](./LICENSE).
