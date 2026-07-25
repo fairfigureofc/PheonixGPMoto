@@ -1,3 +1,14 @@
+# PheonixGPMoto
+
+An iPhone-driven motorcycle navigation display built on the E87 electronic
+display badge. The native Swift proof of concept and BLE refresh benchmark live
+in [`ios/`](./ios/).
+
+This project started from the open-source AuraCast E87/L8 protocol implementation;
+the original documentation is preserved below for protocol and hardware reference.
+
+---
+
 <div align="center">
 
 <img src="docs/screenshots/hero-dark.png" alt="AuraCast - Pattern picker with 29 animated patterns" width="800" />

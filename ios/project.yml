@@ -1,0 +1,26 @@
+name: PheonixGPMoto
+options:
+  bundleIdPrefix: com.fairfigure
+  deploymentTarget:
+    iOS: "17.0"
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+targets:
+  PheonixGPMoto:
+    type: application
+    platform: iOS
+    sources:
+      - PheonixGPMoto
+    info:
+      path: PheonixGPMoto/Info.plist
+      properties:
+        CFBundleDisplayName: PheonixGPMoto
+        NSBluetoothAlwaysUsageDescription: Connect to and benchmark your E87 electronic display badge.
+        UILaunchScreen: {}
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.fairfigure.pheonixgpmoto
+        TARGETED_DEVICE_FAMILY: "1"
