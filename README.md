@@ -34,6 +34,13 @@ The proof of concept includes:
 - Minimal 368×368 navigation-arrow rendering
 - Configurable refresh-cadence benchmarking
 - Per-update encoding, BLE transfer, average, and p95 timing metrics
+- Offline Badge Face Lab for comparing 368×368 navigation treatments and JPEG encoders
+- Exportable UIKit, Image I/O, and one-component grayscale JPEG samples
+- Byte-budget checks for the 3,500-byte comfort target and 3,920-byte BLE window
+
+The iPhone app builds and runs on a physical phone. Hardware refresh timing and
+JPEG-decoder compatibility are still awaiting validation when the E87 badge
+arrives.
 
 See the [iOS prototype instructions](./ios/README.md) to build and run the current
 benchmark on a physical iPhone.

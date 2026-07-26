@@ -10,28 +10,28 @@ enum E87Codec {
     static let chunkSize = 490
 
     static func frame(flag: UInt8, command: UInt8, body: Data) -> Data {
-        var result = Data([0xfe, 0xdc, 0xba, flag, command])
-        result.append(UInt8((body.count >> 8) & 0xff))
-        result.append(UInt8(body.count & 0xff))
+        var result = Data([0xFE, 0xDC, 0xBA, flag, command])
+        result.append(UInt8((body.count >> 8) & 0xFF))
+        result.append(UInt8(body.count & 0xFF))
         result.append(body)
-        result.append(0xef)
+        result.append(0xEF)
         return result
     }
 
     static func parse(_ data: Data) -> E87Frame? {
         guard data.count >= 8,
-              data[0] == 0xfe, data[1] == 0xdc, data[2] == 0xba,
-              data[data.count - 1] == 0xef else { return nil }
+              data[0] == 0xFE, data[1] == 0xDC, data[2] == 0xBA,
+              data[data.count - 1] == 0xEF else { return nil }
         let length = Int(data[5]) << 8 | Int(data[6])
         guard data.count == length + 8 else { return nil }
-        return E87Frame(flag: data[3], command: data[4], body: data.subdata(in: 7..<(7 + length)))
+        return E87Frame(flag: data[3], command: data[4], body: data.subdata(in: 7 ..< (7 + length)))
     }
 
     static func crc16Xmodem(_ data: Data) -> UInt16 {
         var crc: UInt16 = 0
         for byte in data {
             crc ^= UInt16(byte) << 8
-            for _ in 0..<8 {
+            for _ in 0 ..< 8 {
                 crc = (crc & 0x8000) != 0 ? (crc << 1) ^ 0x1021 : crc << 1
             }
         }
@@ -42,8 +42,8 @@ enum E87Codec {
         let crc = crc16Xmodem(file)
         var body = Data([sequence])
         let size = UInt32(file.count)
-        body.append(contentsOf: [UInt8(size >> 24), UInt8((size >> 16) & 0xff), UInt8((size >> 8) & 0xff), UInt8(size & 0xff)])
-        body.append(contentsOf: [UInt8(crc >> 8), UInt8(crc & 0xff), UInt8.random(in: .min ... .max), UInt8.random(in: .min ... .max)])
+        body.append(contentsOf: [UInt8(size >> 24), UInt8((size >> 16) & 0xFF), UInt8((size >> 8) & 0xFF), UInt8(size & 0xFF)])
+        body.append(contentsOf: [UInt8(crc >> 8), UInt8(crc & 0xFF), UInt8.random(in: .min ... .max), UInt8.random(in: .min ... .max)])
         body.append(name.data(using: .ascii) ?? Data())
         body.append(0)
         return body
@@ -51,7 +51,7 @@ enum E87Codec {
 
     static func dataChunk(sequence: UInt8, slot: UInt8, payload: Data) -> Data {
         let crc = crc16Xmodem(payload)
-        var body = Data([sequence, 0x1d, slot, UInt8(crc >> 8), UInt8(crc & 0xff)])
+        var body = Data([sequence, 0x1D, slot, UInt8(crc >> 8), UInt8(crc & 0xFF)])
         body.append(payload)
         return frame(flag: 0x80, command: 0x01, body: body)
     }

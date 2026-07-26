@@ -1,0 +1,318 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2738A291A7EED148240BBE51 /* BadgeFaceLabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE7FA9081481969C186179B4 /* BadgeFaceLabView.swift */; };
+		2DBA4CAC9CCCB5CB33175F59 /* E87Codec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7488F4952B79883CE239DE61 /* E87Codec.swift */; };
+		49B266A243AF842946DAA93D /* JieliTables.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25477AC47C8BD926337A1C63 /* JieliTables.generated.swift */; };
+		62949B47137A18A652BD4F37 /* NavigationRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2D9321B35C3AC955B0FD33E /* NavigationRenderer.swift */; };
+		71F38CF94FCEB06CB17C64FB /* PheonixGPMotoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F0D76FF9CAF498BF5DE304 /* PheonixGPMotoApp.swift */; };
+		93710FCBC6826DC0E767B5CB /* BenchmarkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B358945E81CBF7E1660C5F /* BenchmarkModel.swift */; };
+		A24C35C53C5FBE3870046240 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C271E9699E02907E7FCFC1 /* ContentView.swift */; };
+		A6892FE4473B0A038EEE6548 /* JieliAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC942F9269E93FD6032E8532 /* JieliAuth.swift */; };
+		D931E13D7CE07388D6C4DBCD /* E87BluetoothClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8F2BA57930E8BE52FBE738 /* E87BluetoothClient.swift */; };
+		F5B2844E0A45577ECAA2E844 /* BenchmarkMetric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69D24624BF0716B4B450DE12 /* BenchmarkMetric.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		25477AC47C8BD926337A1C63 /* JieliTables.generated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JieliTables.generated.swift; sourceTree = "<group>"; };
+		3C3D4342EB375FFB53E599B8 /* PheonixGPMoto.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PheonixGPMoto.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		57B358945E81CBF7E1660C5F /* BenchmarkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenchmarkModel.swift; sourceTree = "<group>"; };
+		69D24624BF0716B4B450DE12 /* BenchmarkMetric.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenchmarkMetric.swift; sourceTree = "<group>"; };
+		7488F4952B79883CE239DE61 /* E87Codec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = E87Codec.swift; sourceTree = "<group>"; };
+		771D6D826D90320612AC431F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		7C8F2BA57930E8BE52FBE738 /* E87BluetoothClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = E87BluetoothClient.swift; sourceTree = "<group>"; };
+		AE7FA9081481969C186179B4 /* BadgeFaceLabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeFaceLabView.swift; sourceTree = "<group>"; };
+		C1F0D76FF9CAF498BF5DE304 /* PheonixGPMotoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PheonixGPMotoApp.swift; sourceTree = "<group>"; };
+		CC942F9269E93FD6032E8532 /* JieliAuth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JieliAuth.swift; sourceTree = "<group>"; };
+		D2D9321B35C3AC955B0FD33E /* NavigationRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationRenderer.swift; sourceTree = "<group>"; };
+		D7C271E9699E02907E7FCFC1 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		0C7155512026BF195E0DA6E0 /* PheonixGPMoto */ = {
+			isa = PBXGroup;
+			children = (
+				AE7FA9081481969C186179B4 /* BadgeFaceLabView.swift */,
+				69D24624BF0716B4B450DE12 /* BenchmarkMetric.swift */,
+				57B358945E81CBF7E1660C5F /* BenchmarkModel.swift */,
+				D7C271E9699E02907E7FCFC1 /* ContentView.swift */,
+				7C8F2BA57930E8BE52FBE738 /* E87BluetoothClient.swift */,
+				7488F4952B79883CE239DE61 /* E87Codec.swift */,
+				771D6D826D90320612AC431F /* Info.plist */,
+				CC942F9269E93FD6032E8532 /* JieliAuth.swift */,
+				25477AC47C8BD926337A1C63 /* JieliTables.generated.swift */,
+				D2D9321B35C3AC955B0FD33E /* NavigationRenderer.swift */,
+				C1F0D76FF9CAF498BF5DE304 /* PheonixGPMotoApp.swift */,
+			);
+			path = PheonixGPMoto;
+			sourceTree = "<group>";
+		};
+		28639695815A31898F64A0FA = {
+			isa = PBXGroup;
+			children = (
+				0C7155512026BF195E0DA6E0 /* PheonixGPMoto */,
+				C401A3BF502ABD8AE8CAD73B /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		C401A3BF502ABD8AE8CAD73B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3C3D4342EB375FFB53E599B8 /* PheonixGPMoto.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8C82435E9CE6817A11763A06 /* PheonixGPMoto */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 287DA751AB44510BF1E5F7B9 /* Build configuration list for PBXNativeTarget "PheonixGPMoto" */;
+			buildPhases = (
+				E72DD57D7A881E62A22FA398 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PheonixGPMoto;
+			packageProductDependencies = (
+			);
+			productName = PheonixGPMoto;
+			productReference = 3C3D4342EB375FFB53E599B8 /* PheonixGPMoto.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		1BC37CFDAB15B111956679E4 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+			};
+			buildConfigurationList = 8C7B7F6DBB4C08D33BFFF8C2 /* Build configuration list for PBXProject "PheonixGPMoto" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 28639695815A31898F64A0FA;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = C401A3BF502ABD8AE8CAD73B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8C82435E9CE6817A11763A06 /* PheonixGPMoto */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		E72DD57D7A881E62A22FA398 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2738A291A7EED148240BBE51 /* BadgeFaceLabView.swift in Sources */,
+				F5B2844E0A45577ECAA2E844 /* BenchmarkMetric.swift in Sources */,
+				93710FCBC6826DC0E767B5CB /* BenchmarkModel.swift in Sources */,
+				A24C35C53C5FBE3870046240 /* ContentView.swift in Sources */,
+				D931E13D7CE07388D6C4DBCD /* E87BluetoothClient.swift in Sources */,
+				2DBA4CAC9CCCB5CB33175F59 /* E87Codec.swift in Sources */,
+				A6892FE4473B0A038EEE6548 /* JieliAuth.swift in Sources */,
+				49B266A243AF842946DAA93D /* JieliTables.generated.swift in Sources */,
+				62949B47137A18A652BD4F37 /* NavigationRenderer.swift in Sources */,
+				71F38CF94FCEB06CB17C64FB /* PheonixGPMotoApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		1845DE8BBEBA18924243DB9B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = B76N7U8AZZ;
+				INFOPLIST_FILE = PheonixGPMoto/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.fairfigure.pheonixgpmoto;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		4FA6D73C8E656EFFF3092737 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
+		8CD99532158B6FB43D1B3DF1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 6.0;
+			};
+			name = Release;
+		};
+		D61995A815CA162EED5326DF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = B76N7U8AZZ;
+				INFOPLIST_FILE = PheonixGPMoto/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.fairfigure.pheonixgpmoto;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		287DA751AB44510BF1E5F7B9 /* Build configuration list for PBXNativeTarget "PheonixGPMoto" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D61995A815CA162EED5326DF /* Debug */,
+				1845DE8BBEBA18924243DB9B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		8C7B7F6DBB4C08D33BFFF8C2 /* Build configuration list for PBXProject "PheonixGPMoto" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4FA6D73C8E656EFFF3092737 /* Debug */,
+				8CD99532158B6FB43D1B3DF1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 1BC37CFDAB15B111956679E4 /* Project object */;
+}

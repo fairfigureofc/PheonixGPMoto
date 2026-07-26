@@ -1,5 +1,5 @@
-import CoreBluetooth
 import Combine
+@preconcurrency import CoreBluetooth
 import Foundation
 
 @MainActor
@@ -67,7 +67,9 @@ final class E87BluetoothClient: NSObject, ObservableObject {
     }
 
     func disconnect() {
-        if let peripheral { central.cancelPeripheralConnection(peripheral) }
+        if let peripheral {
+            central.cancelPeripheralConnection(peripheral)
+        }
         resetConnection()
     }
 
@@ -77,25 +79,25 @@ final class E87BluetoothClient: NSObject, ObservableObject {
         notifications.removeAll()
 
         var seq = sequence
-        try writeFrame(flag: 0xc0, command: 0x21, body: Data([seq, 0]))
+        try writeFrame(flag: 0xC0, command: 0x21, body: Data([seq, 0]))
         seq &+= 1
         _ = try await waitFrame(command: 0x21, timeout: 3)
 
-        try writeFrame(flag: 0xc0, command: 0x27, body: Data([seq, 0, 0, 0, 0, 2, 1]))
+        try writeFrame(flag: 0xC0, command: 0x27, body: Data([seq, 0, 0, 0, 0, 2, 1]))
         seq &+= 1
         _ = try await waitFrame(command: 0x27, timeout: 3)
 
         let temporaryName = String(format: "%08x.tmp", UInt32.random(in: .min ... .max))
-        try writeFrame(flag: 0xc0, command: 0x1b, body: E87Codec.metadata(sequence: seq, file: jpeg, name: temporaryName))
+        try writeFrame(flag: 0xC0, command: 0x1B, body: E87Codec.metadata(sequence: seq, file: jpeg, name: temporaryName))
         seq &+= 1
-        let metadataAck = try await waitFrame(command: 0x1b, timeout: 3)
+        let metadataAck = try await waitFrame(command: 0x1B, timeout: 3)
         let chunkSize = metadataAck.body.count >= 4 ? Int(metadataAck.body[2]) << 8 | Int(metadataAck.body[3]) : E87Codec.chunkSize
-        guard chunkSize > 0, chunkSize <= 4096 else { throw E87Error.deviceRejected(0xff) }
+        guard chunkSize > 0, chunkSize <= 4096 else { throw E87Error.deviceRejected(0xFF) }
 
-        var current = try await waitFrame(command: 0x1d, timeout: 5)
+        var current = try await waitFrame(command: 0x1D, timeout: 5)
         var completed = false
         while !completed {
-            guard current.body.count >= 8 else { throw E87Error.deviceRejected(0xfe) }
+            guard current.body.count >= 8 else { throw E87Error.deviceRejected(0xFE) }
             let status = current.body[1]
             guard status == 0 else { throw E87Error.deviceRejected(status) }
             let windowSize = Int(current.body[2]) << 8 | Int(current.body[3])
@@ -104,23 +106,23 @@ final class E87BluetoothClient: NSObject, ObservableObject {
             var slot: UInt8 = 0
             while sent < windowSize, offset + sent < jpeg.count {
                 let length = min(chunkSize, min(windowSize - sent, jpeg.count - offset - sent))
-                let payload = jpeg.subdata(in: (offset + sent)..<(offset + sent + length))
+                let payload = jpeg.subdata(in: (offset + sent) ..< (offset + sent + length))
                 try write(E87Codec.dataChunk(sequence: seq, slot: slot, payload: payload), to: dataWriter)
                 seq &+= 1
                 slot = (slot + 1) & 7
                 sent += length
             }
 
-            let next = try await waitFrame(commands: [0x1d, 0x20, 0x1c], timeout: 8)
+            let next = try await waitFrame(commands: [0x1D, 0x20, 0x1C], timeout: 8)
             switch next.command {
-            case 0x1d:
+            case 0x1D:
                 current = next
             case 0x20:
                 try respondToFileComplete(next)
-                let close = try await waitFrame(command: 0x1c, timeout: 5)
+                let close = try await waitFrame(command: 0x1C, timeout: 5)
                 try finish(close)
                 completed = true
-            case 0x1c:
+            case 0x1C:
                 try finish(next)
                 completed = true
             default:
@@ -144,7 +146,7 @@ final class E87BluetoothClient: NSObject, ObservableObject {
             appendLog("Authentication succeeded")
         }
         guard !initialized else { return }
-        try writeFrame(flag: 0xc0, command: 0x06, body: Data([0x02, 0x00, 0x01]))
+        try writeFrame(flag: 0xC0, command: 0x06, body: Data([0x02, 0x00, 0x01]))
         sequence = 1
         try sendClockAndHeartbeat()
         initialized = true
@@ -154,10 +156,10 @@ final class E87BluetoothClient: NSObject, ObservableObject {
     private func sendClockAndHeartbeat() throws {
         let parts = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: Date())
         let year = parts.year ?? 2026
-        let time = Data([0x9e, 0x45, 0x08, 0x02, 0x07, 0x00, UInt8(year & 0xff), UInt8((year >> 8) & 0xff), UInt8(parts.month ?? 1), UInt8(parts.day ?? 1), 0, UInt8(parts.hour ?? 0), UInt8(parts.minute ?? 0)])
+        let time = Data([0x9E, 0x45, 0x08, 0x02, 0x07, 0x00, UInt8(year & 0xFF), UInt8((year >> 8) & 0xFF), UInt8(parts.month ?? 1), UInt8(parts.day ?? 1), 0, UInt8(parts.hour ?? 0), UInt8(parts.minute ?? 0)])
         try write(time, to: controlWriter)
-        try write(Data([0x9e, 0x20, 0x08, 0x16, 0x01, 0x00, 0x01]), to: controlWriter)
-        try write(Data([0x9e, 0xb5, 0x0b, 0x29, 0x01, 0x00, 0x80]), to: controlWriter)
+        try write(Data([0x9E, 0x20, 0x08, 0x16, 0x01, 0x00, 0x01]), to: controlWriter)
+        try write(Data([0x9E, 0xB5, 0x0B, 0x29, 0x01, 0x00, 0x80]), to: controlWriter)
     }
 
     private func respondToFileComplete(_ frame: E87Frame) throws {
@@ -171,8 +173,8 @@ final class E87BluetoothClient: NSObject, ObservableObject {
 
     private func finish(_ frame: E87Frame) throws {
         let deviceSequence = frame.body.first ?? 0
-        let status = frame.body.count > 1 ? frame.body[1] : 0xff
-        try writeFrame(flag: 0, command: 0x1c, body: Data([0, deviceSequence]))
+        let status = frame.body.count > 1 ? frame.body[1] : 0xFF
+        try writeFrame(flag: 0, command: 0x1C, body: Data([0, deviceSequence]))
         guard status == 0 else { throw E87Error.deviceRejected(status) }
     }
 
@@ -183,7 +185,7 @@ final class E87BluetoothClient: NSObject, ObservableObject {
     private func write(_ data: Data, to characteristic: CBCharacteristic?) throws {
         guard let peripheral, let characteristic else { throw E87Error.notConnected }
         guard data.count <= peripheral.maximumWriteValueLength(for: .withoutResponse) else {
-            throw E87Error.deviceRejected(0xfd)
+            throw E87Error.deviceRejected(0xFD)
         }
         peripheral.writeValue(data, for: characteristic, type: characteristic.properties.contains(.writeWithoutResponse) ? .withoutResponse : .withResponse)
     }
@@ -197,7 +199,7 @@ final class E87BluetoothClient: NSObject, ObservableObject {
             guard let frame = E87Codec.parse(data) else { return false }
             return commands.contains(frame.command)
         }, timeout: timeout, label: "command \(commands.map { String(format: "0x%02x", $0) }.joined(separator: ", "))")
-        guard let frame = E87Codec.parse(raw) else { throw E87Error.deviceRejected(0xfc) }
+        guard let frame = E87Codec.parse(raw) else { throw E87Error.deviceRejected(0xFC) }
         return frame
     }
 
@@ -215,7 +217,9 @@ final class E87BluetoothClient: NSObject, ObservableObject {
 
     private func appendLog(_ text: String) {
         logLines.append(text)
-        if logLines.count > 100 { logLines.removeFirst(logLines.count - 100) }
+        if logLines.count > 100 {
+            logLines.removeFirst(logLines.count - 100)
+        }
     }
 
     private func resetConnection() {
@@ -225,38 +229,46 @@ final class E87BluetoothClient: NSObject, ObservableObject {
     }
 }
 
-extension E87BluetoothClient: CBCentralManagerDelegate {
+extension E87BluetoothClient: @MainActor CBCentralManagerDelegate {
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
         state = central.state == .poweredOn ? "Ready to scan" : "Bluetooth unavailable"
     }
 
-    func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String: Any], rssi RSSI: NSNumber) {
+    func centralManager(_: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String: Any], rssi _: NSNumber) {
         let name = peripheral.name ?? advertisementData[CBAdvertisementDataLocalNameKey] as? String ?? ""
         guard ["E87", "L8", "X9", "LED Badge"].contains(where: { name.localizedCaseInsensitiveContains($0) }) else { return }
-        if !discovered.contains(where: { $0.identifier == peripheral.identifier }) { discovered.append(peripheral) }
+        if !discovered.contains(where: { $0.identifier == peripheral.identifier }) {
+            discovered.append(peripheral)
+        }
     }
 
-    func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
+    func centralManager(_: CBCentralManager, didConnect _: CBPeripheral) {
         connectedContinuation?.resume(); connectedContinuation = nil
     }
 
-    func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
+    func centralManager(_: CBCentralManager, didFailToConnect _: CBPeripheral, error: Error?) {
         connectedContinuation?.resume(throwing: error ?? E87Error.notConnected); connectedContinuation = nil
     }
 
-    func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
+    func centralManager(_: CBCentralManager, didDisconnectPeripheral _: CBPeripheral, error _: Error?) {
         resetConnection()
     }
 }
 
-extension E87BluetoothClient: CBPeripheralDelegate {
+extension E87BluetoothClient: @MainActor CBPeripheralDelegate {
     func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
-        if let error { discoveryContinuation?.resume(throwing: error); discoveryContinuation = nil; return }
-        for service in peripheral.services ?? [] { peripheral.discoverCharacteristics(nil, for: service) }
+        if let error {
+            discoveryContinuation?.resume(throwing: error); discoveryContinuation = nil; return
+        }
+        for service in peripheral.services ?? [] {
+            peripheral.discoverCharacteristics(nil, for: service)
+        }
     }
 
     func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
-        if let error { discoveryContinuation?.resume(throwing: error); discoveryContinuation = nil; return }
+        if let error {
+            discoveryContinuation?.resume(throwing: error); discoveryContinuation = nil; return
+        }
         for characteristic in service.characteristics ?? [] {
             if characteristic.uuid == ae01 {
                 dataWriter = characteristic
@@ -271,15 +283,21 @@ extension E87BluetoothClient: CBPeripheralDelegate {
     }
 
     func peripheral(_ peripheral: CBPeripheral, didUpdateNotificationStateFor characteristic: CBCharacteristic, error: Error?) {
-        if let error { discoveryContinuation?.resume(throwing: error); discoveryContinuation = nil; return }
-        if characteristic.isNotifying { pendingNotificationUUIDs.remove(characteristic.uuid) }
+        if let error {
+            discoveryContinuation?.resume(throwing: error); discoveryContinuation = nil; return
+        }
+        if characteristic.isNotifying {
+            pendingNotificationUUIDs.remove(characteristic.uuid)
+        }
         finishDiscoveryIfReady(peripheral)
     }
 
-    func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
+    func peripheral(_: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
         guard error == nil, let value = characteristic.value else { return }
         notifications.append(value)
-        if notifications.count > 300 { notifications.removeFirst() }
+        if notifications.count > 300 {
+            notifications.removeFirst()
+        }
     }
 
     private func finishDiscoveryIfReady(_ peripheral: CBPeripheral) {
