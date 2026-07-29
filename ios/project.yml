@@ -22,5 +22,6 @@ targets:
           - UIInterfaceOrientationPortrait
     settings:
       base:
+        DEVELOPMENT_TEAM: B76N7U8AZZ
         PRODUCT_BUNDLE_IDENTIFIER: com.fairfigure.pheonixgpmoto
         TARGETED_DEVICE_FAMILY: "1"

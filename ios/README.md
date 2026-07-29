@@ -3,6 +3,19 @@
 Native iOS proof of concept for measuring how quickly an E87/L8 badge can accept
 successive navigation-style JPEG updates over BLE.
 
+> [!NOTE]
+> **Archived hardware experiment:** BLE authentication and image transfer were
+> successfully reverse engineered, but the stock firmware on the tested E38
+> badge requires the badge to remain in pairing mode while connected. In that
+> mode the display does not automatically refresh after receiving an image.
+> This makes the stock badge unsuitable for dependable turn-by-turn navigation.
+> The implementation remains here as a reference for anyone experimenting with
+> BLE image transfer to generic Jieli-based badges.
+
+PheonixGPMoto is continuing with an ESP32 touchscreen using the ILI9341 display
+driver (240x320, SKU E32R28T), where the application can control screen refreshes
+directly.
+
 ## What it does
 
 - Scans for E87, L8, X9, and LED Badge peripherals.
@@ -19,15 +32,18 @@ The **Face Lab** tab renders the intended information hierarchy: the next exit o
 street name, distance, then a simple left, straight, or right arrow. It currently
 supports clean, divider, and exit-shield treatments.
 
-Each treatment can be encoded using UIKit, Image I/O, or a true one-component
-grayscale Image I/O path. The lab reports the exact JPEG size, 490-byte transfer
-chunk count, and whether the image fits inside the E87's 3,920-byte transfer
-window. It can also export the compressed JPEG through the iOS share sheet.
+Each treatment can be encoded using the E87-compatible encoder, UIKit, Image I/O,
+or a true one-component grayscale Image I/O path. The lab reports the exact JPEG
+size, 490-byte transfer chunk count, and whether the image fits inside the E87's
+3,920-byte transfer window. It can also export the compressed JPEG through the
+iOS share sheet.
 
-Initial phone-only testing found that Apple's RGB encoders produce roughly 9 KB
-even at low quality for the clean treatment. Grayscale is substantially smaller
-and approaches the single-window limit. Final quality, decoder compatibility,
-and one-second refresh viability must be measured on the physical E87.
+Physical-device testing found that Apple's JPEG encoders use image-optimized
+Huffman tables that the badge accepts over BLE but renders as a black screen.
+The E87-compatible path instead emits a baseline, one-component JFIF with the
+fixed standard luminance tables used by the working web uploader. It is now the
+default for both Face Lab and cadence tests. UIKit and Image I/O remain available
+only for size and decoder comparisons.
 
 This is a transport benchmark, not a navigation app. It deliberately excludes a
 maps SDK until the badge update cadence has been measured on real hardware.

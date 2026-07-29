@@ -67,6 +67,17 @@ struct ContentView: View {
                     Text(model.status).font(.footnote).foregroundStyle(.secondary)
                 }
 
+                if let jpeg = model.latestJPEG, let image = UIImage(data: jpeg) {
+                    Section("Exact JPEG sent to badge") {
+                        Image(uiImage: image)
+                            .resizable()
+                            .interpolation(.none)
+                            .scaledToFit()
+                            .clipShape(Circle())
+                        LabeledContent("Size", value: "\(jpeg.count) bytes")
+                    }
+                }
+
                 if !model.metrics.isEmpty {
                     Section("Results") {
                         Text(model.summary).font(.headline)
@@ -93,6 +104,16 @@ struct ContentView: View {
                 Section("Interpretation") {
                     Text("A cadence passes when every cycle succeeds and BLE p95 stays below the target interval. Visually confirm screen-change latency because the badge does not send a display-presented event.")
                         .font(.footnote).foregroundStyle(.secondary)
+                }
+
+                if !bluetooth.logLines.isEmpty {
+                    Section("Device Log") {
+                        ForEach(Array(bluetooth.logLines.enumerated()), id: \.offset) { _, line in
+                            Text(line)
+                                .font(.caption.monospaced())
+                                .textSelection(.enabled)
+                        }
+                    }
                 }
             }
             .navigationTitle("PheonixGPMoto")

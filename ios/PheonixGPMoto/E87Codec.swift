@@ -43,7 +43,7 @@ enum E87Codec {
         var body = Data([sequence])
         let size = UInt32(file.count)
         body.append(contentsOf: [UInt8(size >> 24), UInt8((size >> 16) & 0xFF), UInt8((size >> 8) & 0xFF), UInt8(size & 0xFF)])
-        body.append(contentsOf: [UInt8(crc >> 8), UInt8(crc & 0xFF), UInt8.random(in: .min ... .max), UInt8.random(in: .min ... .max)])
+        body.append(contentsOf: [UInt8(crc >> 8), UInt8(crc & 0xFF), 0x66, 0x66])
         body.append(name.data(using: .ascii) ?? Data())
         body.append(0)
         return body

@@ -12,6 +12,7 @@
 		49B266A243AF842946DAA93D /* JieliTables.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25477AC47C8BD926337A1C63 /* JieliTables.generated.swift */; };
 		62949B47137A18A652BD4F37 /* NavigationRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2D9321B35C3AC955B0FD33E /* NavigationRenderer.swift */; };
 		71F38CF94FCEB06CB17C64FB /* PheonixGPMotoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F0D76FF9CAF498BF5DE304 /* PheonixGPMotoApp.swift */; };
+		7DEFA8B34F1B18C81F83B711 /* BadgeCompatibleJPEGEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F81CA8C8836641EAB61F4E3 /* BadgeCompatibleJPEGEncoder.swift */; };
 		93710FCBC6826DC0E767B5CB /* BenchmarkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B358945E81CBF7E1660C5F /* BenchmarkModel.swift */; };
 		A24C35C53C5FBE3870046240 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C271E9699E02907E7FCFC1 /* ContentView.swift */; };
 		A6892FE4473B0A038EEE6548 /* JieliAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC942F9269E93FD6032E8532 /* JieliAuth.swift */; };
@@ -21,12 +22,13 @@
 
 /* Begin PBXFileReference section */
 		25477AC47C8BD926337A1C63 /* JieliTables.generated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JieliTables.generated.swift; sourceTree = "<group>"; };
-		3C3D4342EB375FFB53E599B8 /* PheonixGPMoto.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PheonixGPMoto.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3C3D4342EB375FFB53E599B8 /* PheonixGPMoto.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = PheonixGPMoto.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		57B358945E81CBF7E1660C5F /* BenchmarkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenchmarkModel.swift; sourceTree = "<group>"; };
 		69D24624BF0716B4B450DE12 /* BenchmarkMetric.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenchmarkMetric.swift; sourceTree = "<group>"; };
 		7488F4952B79883CE239DE61 /* E87Codec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = E87Codec.swift; sourceTree = "<group>"; };
 		771D6D826D90320612AC431F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		7C8F2BA57930E8BE52FBE738 /* E87BluetoothClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = E87BluetoothClient.swift; sourceTree = "<group>"; };
+		8F81CA8C8836641EAB61F4E3 /* BadgeCompatibleJPEGEncoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeCompatibleJPEGEncoder.swift; sourceTree = "<group>"; };
 		AE7FA9081481969C186179B4 /* BadgeFaceLabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeFaceLabView.swift; sourceTree = "<group>"; };
 		C1F0D76FF9CAF498BF5DE304 /* PheonixGPMotoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PheonixGPMotoApp.swift; sourceTree = "<group>"; };
 		CC942F9269E93FD6032E8532 /* JieliAuth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JieliAuth.swift; sourceTree = "<group>"; };
@@ -38,6 +40,7 @@
 		0C7155512026BF195E0DA6E0 /* PheonixGPMoto */ = {
 			isa = PBXGroup;
 			children = (
+				8F81CA8C8836641EAB61F4E3 /* BadgeCompatibleJPEGEncoder.swift */,
 				AE7FA9081481969C186179B4 /* BadgeFaceLabView.swift */,
 				69D24624BF0716B4B450DE12 /* BenchmarkMetric.swift */,
 				57B358945E81CBF7E1660C5F /* BenchmarkModel.swift */,
@@ -97,6 +100,11 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					8C82435E9CE6817A11763A06 = {
+						DevelopmentTeam = B76N7U8AZZ;
+					};
+				};
 			};
 			buildConfigurationList = 8C7B7F6DBB4C08D33BFFF8C2 /* Build configuration list for PBXProject "PheonixGPMoto" */;
 			developmentRegion = en;
@@ -122,6 +130,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7DEFA8B34F1B18C81F83B711 /* BadgeCompatibleJPEGEncoder.swift in Sources */,
 				2738A291A7EED148240BBE51 /* BadgeFaceLabView.swift in Sources */,
 				F5B2844E0A45577ECAA2E844 /* BenchmarkMetric.swift in Sources */,
 				93710FCBC6826DC0E767B5CB /* BenchmarkModel.swift in Sources */,

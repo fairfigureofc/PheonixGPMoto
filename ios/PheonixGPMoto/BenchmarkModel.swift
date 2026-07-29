@@ -11,6 +11,7 @@ final class BenchmarkModel {
     var requestedCycles = 20
     var isRunning = false
     var status = "Connect a badge to begin."
+    var latestJPEG: Data?
     private var benchmarkTask: Task<Void, Never>?
 
     func connect(_ peripheral: CBPeripheral) {
@@ -36,6 +37,7 @@ final class BenchmarkModel {
                 let direction: NavigationDirection = cycle.isMultiple(of: 2) ? .right : .left
                 do {
                     let rendered = try NavigationRenderer.render(direction: direction)
+                    latestJPEG = rendered.jpeg
                     let upload = try await bluetooth.upload(jpeg: rendered.jpeg)
                     let total = (ContinuousClock.now - cycleStarted).milliseconds
                     metrics.append(BenchmarkMetric(cycle: cycle, direction: direction, jpegBytes: rendered.jpeg.count, encodeMilliseconds: rendered.encodeMilliseconds, uploadMilliseconds: upload, cycleMilliseconds: total, succeeded: true, error: nil))

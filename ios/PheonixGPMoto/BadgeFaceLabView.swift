@@ -23,6 +23,7 @@ enum BadgeFaceDirection: String, CaseIterable, Identifiable {
 }
 
 enum BadgeJPEGEncoder: String, CaseIterable, Identifiable {
+    case badgeCompatible = "E87 compatible"
     case uiKit = "UIKit"
     case imageIO = "Image I/O"
     case imageIOGrayscale = "Grayscale"
@@ -65,10 +66,14 @@ enum BadgeFaceRenderer {
             distance: distance
         )
         let jpeg: Data? = switch encoder {
+        case .badgeCompatible:
+            BadgeCompatibleJPEGEncoder.encode(image, quality: Int((quality * 100).rounded()))
         case .uiKit:
             image.jpegData(compressionQuality: quality)
         case .imageIO:
-            encodeWithImageIO(image, quality: quality)
+            normalizedRGBCGImage(from: image).flatMap {
+                encodeWithImageIO($0, quality: quality)
+            }
         case .imageIOGrayscale:
             grayscaleCGImage(from: image).flatMap {
                 encodeWithImageIO($0, quality: quality)
@@ -216,6 +221,26 @@ enum BadgeFaceRenderer {
         return context.makeImage()
     }
 
+    private static func normalizedRGBCGImage(from image: UIImage) -> CGImage? {
+        guard let source = image.cgImage else { return nil }
+        let width = Int(size.width)
+        let height = Int(size.height)
+        guard let context = CGContext(
+            data: nil,
+            width: width,
+            height: height,
+            bitsPerComponent: 8,
+            bytesPerRow: width * 4,
+            space: CGColorSpaceCreateDeviceRGB(),
+            bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue
+        ) else { return nil }
+        context.setFillColor(UIColor.black.cgColor)
+        context.fill(CGRect(origin: .zero, size: size))
+        context.interpolationQuality = .none
+        context.draw(source, in: CGRect(origin: .zero, size: size))
+        return context.makeImage()
+    }
+
     private static func encodeWithImageIO(_ cgImage: CGImage, quality: Double) -> Data? {
         let output = NSMutableData()
         guard let destination = CGImageDestinationCreateWithData(
@@ -237,7 +262,7 @@ enum BadgeFaceRenderer {
 struct BadgeFaceLabView: View {
     @State private var treatment = BadgeFaceTreatment.clean
     @State private var direction = BadgeFaceDirection.left
-    @State private var encoder = BadgeJPEGEncoder.imageIO
+    @State private var encoder = BadgeJPEGEncoder.badgeCompatible
     @State private var quality = 0.42
     @State private var export: BadgeFaceExport?
     @State private var shareURL: URL?
