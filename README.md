@@ -20,10 +20,17 @@ keeping the rider's attention on the road.
 
 ## Current status
 
-This repository is an early hardware and transport experiment. The native iOS
-benchmark currently focuses on the riskiest technical question: how quickly and
-reliably an iPhone can refresh navigation-style images on an E87/L8 electronic
-display badge over Bluetooth Low Energy.
+**The generic-badge BLE approach is an archived, unsuccessful hardware
+experiment.** Authentication and image transfer work, but the stock firmware on
+the tested E38 badge requires pairing mode for the BLE connection. While it is in
+pairing mode, the display does not automatically refresh after receiving an
+image. That behavior makes the badge unsuitable for dependable turn-by-turn
+navigation without replacing its firmware.
+
+The code is intentionally retained for anyone who wants to experiment with BLE
+image transfer to generic Jieli-based badges. It documents the protocol work,
+successful transfers, JPEG compatibility investigation, and practical firmware
+limitation discovered on physical hardware.
 
 The proof of concept includes:
 
@@ -34,13 +41,21 @@ The proof of concept includes:
 - Minimal 368×368 navigation-arrow rendering
 - Configurable refresh-cadence benchmarking
 - Per-update encoding, BLE transfer, average, and p95 timing metrics
+- Offline Badge Face Lab for comparing 368×368 navigation treatments and JPEG encoders
+- Exportable UIKit, Image I/O, and one-component grayscale JPEG samples
+- Byte-budget checks for the 3,500-byte comfort target and 3,920-byte BLE window
+
+The iPhone app builds and runs on a physical phone, but this implementation is no
+longer the planned navigation hardware.
 
 See the [iOS prototype instructions](./ios/README.md) to build and run the current
 benchmark on a physical iPhone.
 
 ## Intended direction
 
-Once the badge refresh rate is validated on hardware, the next phase is to add:
+Development is moving to an ESP32 touchscreen with an ILI9341 display driver
+(240x320, SKU E32R28T). Direct control of the screen refresh removes the stock
+badge firmware limitation. The next phase is to add:
 
 - Destination search and route calculation
 - GPS and heading updates
@@ -53,9 +68,9 @@ This is a proof of concept and should not be treated as a safety-certified
 navigation device. Riders remain responsible for road awareness and safe vehicle
 operation.
 
-## Hardware
+## Archived badge hardware
 
-The current target is the round E87/L8 family of Bluetooth electronic display
+The archived target is the E38/E87/L8 family of Bluetooth electronic display
 badges using the Jieli BLE protocol. Protocol notes are retained in
 [PROTOCOL.md](./PROTOCOL.md), with reverse-engineering material under
 [`protocol-understanding/`](./protocol-understanding/).

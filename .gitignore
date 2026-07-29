@@ -35,3 +35,7 @@ __pycache__/
 *.swp
 .idea/
 .vscode/
+
+# Xcode user state
+xcuserdata/
+*.xcuserstate

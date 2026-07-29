@@ -11,6 +11,7 @@ final class BenchmarkModel {
     var requestedCycles = 20
     var isRunning = false
     var status = "Connect a badge to begin."
+    var latestJPEG: Data?
     private var benchmarkTask: Task<Void, Never>?
 
     func connect(_ peripheral: CBPeripheral) {
@@ -30,17 +31,20 @@ final class BenchmarkModel {
         isRunning = true
         status = "Benchmark running…"
         benchmarkTask = Task {
-            for cycle in 1...requestedCycles {
+            for cycle in 1 ... requestedCycles {
                 guard !Task.isCancelled else { break }
                 let cycleStarted = ContinuousClock.now
                 let direction: NavigationDirection = cycle.isMultiple(of: 2) ? .right : .left
                 do {
                     let rendered = try NavigationRenderer.render(direction: direction)
+                    latestJPEG = rendered.jpeg
                     let upload = try await bluetooth.upload(jpeg: rendered.jpeg)
                     let total = (ContinuousClock.now - cycleStarted).milliseconds
                     metrics.append(BenchmarkMetric(cycle: cycle, direction: direction, jpegBytes: rendered.jpeg.count, encodeMilliseconds: rendered.encodeMilliseconds, uploadMilliseconds: upload, cycleMilliseconds: total, succeeded: true, error: nil))
-                    let remaining = cadenceSeconds - total / 1_000
-                    if remaining > 0 { try await Task.sleep(for: .seconds(remaining)) }
+                    let remaining = cadenceSeconds - total / 1000
+                    if remaining > 0 {
+                        try await Task.sleep(for: .seconds(remaining))
+                    }
                 } catch {
                     let total = (ContinuousClock.now - cycleStarted).milliseconds
                     metrics.append(BenchmarkMetric(cycle: cycle, direction: direction, jpegBytes: 0, encodeMilliseconds: 0, uploadMilliseconds: 0, cycleMilliseconds: total, succeeded: false, error: error.localizedDescription))
@@ -49,7 +53,9 @@ final class BenchmarkModel {
                 }
             }
             isRunning = false
-            if metrics.allSatisfy(\.succeeded) { status = summary }
+            if metrics.allSatisfy(\.succeeded) {
+                status = summary
+            }
         }
     }
 

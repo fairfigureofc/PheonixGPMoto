@@ -6,10 +6,24 @@ struct ContentView: View {
 
     init(model: BenchmarkModel) {
         self.model = model
-        self.bluetooth = model.bluetooth
+        bluetooth = model.bluetooth
     }
 
     var body: some View {
+        TabView {
+            benchmarkView
+                .tabItem {
+                    Label("BLE Bench", systemImage: "antenna.radiowaves.left.and.right")
+                }
+
+            BadgeFaceLabView()
+                .tabItem {
+                    Label("Face Lab", systemImage: "circle.grid.cross")
+                }
+        }
+    }
+
+    private var benchmarkView: some View {
         NavigationStack {
             List {
                 Section("Badge") {
@@ -41,14 +55,27 @@ struct ContentView: View {
                             Text("2.0 s").tag(2.0)
                         }.pickerStyle(.menu)
                     }
-                    Stepper("Cycles: \(model.requestedCycles)", value: $model.requestedCycles, in: 2...100, step: 2)
+                    Stepper("Cycles: \(model.requestedCycles)", value: $model.requestedCycles, in: 2 ... 100, step: 2)
                     HStack {
                         Button(model.isRunning ? "Running…" : "Start") { model.start() }
                             .buttonStyle(.borderedProminent)
                             .disabled(!bluetooth.isConnected || model.isRunning)
-                        if model.isRunning { Button("Stop", role: .destructive) { model.stop() } }
+                        if model.isRunning {
+                            Button("Stop", role: .destructive) { model.stop() }
+                        }
                     }
                     Text(model.status).font(.footnote).foregroundStyle(.secondary)
+                }
+
+                if let jpeg = model.latestJPEG, let image = UIImage(data: jpeg) {
+                    Section("Exact JPEG sent to badge") {
+                        Image(uiImage: image)
+                            .resizable()
+                            .interpolation(.none)
+                            .scaledToFit()
+                            .clipShape(Circle())
+                        LabeledContent("Size", value: "\(jpeg.count) bytes")
+                    }
                 }
 
                 if !model.metrics.isEmpty {
@@ -77,6 +104,16 @@ struct ContentView: View {
                 Section("Interpretation") {
                     Text("A cadence passes when every cycle succeeds and BLE p95 stays below the target interval. Visually confirm screen-change latency because the badge does not send a display-presented event.")
                         .font(.footnote).foregroundStyle(.secondary)
+                }
+
+                if !bluetooth.logLines.isEmpty {
+                    Section("Device Log") {
+                        ForEach(Array(bluetooth.logLines.enumerated()), id: \.offset) { _, line in
+                            Text(line)
+                                .font(.caption.monospaced())
+                                .textSelection(.enabled)
+                        }
+                    }
                 }
             }
             .navigationTitle("PheonixGPMoto")
