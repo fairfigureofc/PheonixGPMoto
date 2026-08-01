@@ -35,7 +35,16 @@ __pycache__/
 *.swp
 .idea/
 .vscode/
+!firmware/.vscode/
+firmware/.vscode/*
+!firmware/.vscode/settings.json
+!firmware/.vscode/tasks.json
 
 # Xcode user state
 xcuserdata/
 *.xcuserstate
+.derived-data/
+.swift-module-cache/
+
+# PlatformIO
+.pio/

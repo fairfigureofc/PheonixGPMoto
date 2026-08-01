@@ -51,6 +51,9 @@ longer the planned navigation hardware.
 See the [iOS prototype instructions](./ios/README.md) to build and run the current
 benchmark on a physical iPhone.
 
+The new ESP32 phone-to-display hello world is documented in
+[`firmware/README.md`](./firmware/README.md).
+
 ## Intended direction
 
 Development is moving to an ESP32 touchscreen with an ILI9341 display driver

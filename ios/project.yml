@@ -16,7 +16,7 @@ targets:
       path: PheonixGPMoto/Info.plist
       properties:
         CFBundleDisplayName: PheonixGPMoto
-        NSBluetoothAlwaysUsageDescription: Connect to and benchmark your E87 electronic display badge.
+        NSBluetoothAlwaysUsageDescription: Connect to the Pheonix Moto navigation display.
         UILaunchScreen: {}
         UISupportedInterfaceOrientations:
           - UIInterfaceOrientationPortrait

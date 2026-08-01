@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0DC17A93ABEBC5F6E706C07E /* NavigationPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4B8435027BE52C9DC114B49 /* NavigationPacket.swift */; };
+		1A5D544F620038C9AD4079F6 /* ESP32BluetoothClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F93BF4176E0970DDE7C8B1 /* ESP32BluetoothClient.swift */; };
+		1F432E2F5234472768143329 /* ESP32DemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0580407AD81E9F3CBF7A4390 /* ESP32DemoView.swift */; };
 		2738A291A7EED148240BBE51 /* BadgeFaceLabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE7FA9081481969C186179B4 /* BadgeFaceLabView.swift */; };
 		2DBA4CAC9CCCB5CB33175F59 /* E87Codec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7488F4952B79883CE239DE61 /* E87Codec.swift */; };
 		49B266A243AF842946DAA93D /* JieliTables.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25477AC47C8BD926337A1C63 /* JieliTables.generated.swift */; };
@@ -21,14 +24,17 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0580407AD81E9F3CBF7A4390 /* ESP32DemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ESP32DemoView.swift; sourceTree = "<group>"; };
 		25477AC47C8BD926337A1C63 /* JieliTables.generated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JieliTables.generated.swift; sourceTree = "<group>"; };
 		3C3D4342EB375FFB53E599B8 /* PheonixGPMoto.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = PheonixGPMoto.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		57B358945E81CBF7E1660C5F /* BenchmarkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenchmarkModel.swift; sourceTree = "<group>"; };
 		69D24624BF0716B4B450DE12 /* BenchmarkMetric.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenchmarkMetric.swift; sourceTree = "<group>"; };
 		7488F4952B79883CE239DE61 /* E87Codec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = E87Codec.swift; sourceTree = "<group>"; };
 		771D6D826D90320612AC431F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		79F93BF4176E0970DDE7C8B1 /* ESP32BluetoothClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ESP32BluetoothClient.swift; sourceTree = "<group>"; };
 		7C8F2BA57930E8BE52FBE738 /* E87BluetoothClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = E87BluetoothClient.swift; sourceTree = "<group>"; };
 		8F81CA8C8836641EAB61F4E3 /* BadgeCompatibleJPEGEncoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeCompatibleJPEGEncoder.swift; sourceTree = "<group>"; };
+		A4B8435027BE52C9DC114B49 /* NavigationPacket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationPacket.swift; sourceTree = "<group>"; };
 		AE7FA9081481969C186179B4 /* BadgeFaceLabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeFaceLabView.swift; sourceTree = "<group>"; };
 		C1F0D76FF9CAF498BF5DE304 /* PheonixGPMotoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PheonixGPMotoApp.swift; sourceTree = "<group>"; };
 		CC942F9269E93FD6032E8532 /* JieliAuth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JieliAuth.swift; sourceTree = "<group>"; };
@@ -47,9 +53,12 @@
 				D7C271E9699E02907E7FCFC1 /* ContentView.swift */,
 				7C8F2BA57930E8BE52FBE738 /* E87BluetoothClient.swift */,
 				7488F4952B79883CE239DE61 /* E87Codec.swift */,
+				79F93BF4176E0970DDE7C8B1 /* ESP32BluetoothClient.swift */,
+				0580407AD81E9F3CBF7A4390 /* ESP32DemoView.swift */,
 				771D6D826D90320612AC431F /* Info.plist */,
 				CC942F9269E93FD6032E8532 /* JieliAuth.swift */,
 				25477AC47C8BD926337A1C63 /* JieliTables.generated.swift */,
+				A4B8435027BE52C9DC114B49 /* NavigationPacket.swift */,
 				D2D9321B35C3AC955B0FD33E /* NavigationRenderer.swift */,
 				C1F0D76FF9CAF498BF5DE304 /* PheonixGPMotoApp.swift */,
 			);
@@ -137,8 +146,11 @@
 				A24C35C53C5FBE3870046240 /* ContentView.swift in Sources */,
 				D931E13D7CE07388D6C4DBCD /* E87BluetoothClient.swift in Sources */,
 				2DBA4CAC9CCCB5CB33175F59 /* E87Codec.swift in Sources */,
+				1A5D544F620038C9AD4079F6 /* ESP32BluetoothClient.swift in Sources */,
+				1F432E2F5234472768143329 /* ESP32DemoView.swift in Sources */,
 				A6892FE4473B0A038EEE6548 /* JieliAuth.swift in Sources */,
 				49B266A243AF842946DAA93D /* JieliTables.generated.swift in Sources */,
+				0DC17A93ABEBC5F6E706C07E /* NavigationPacket.swift in Sources */,
 				62949B47137A18A652BD4F37 /* NavigationRenderer.swift in Sources */,
 				71F38CF94FCEB06CB17C64FB /* PheonixGPMotoApp.swift in Sources */,
 			);

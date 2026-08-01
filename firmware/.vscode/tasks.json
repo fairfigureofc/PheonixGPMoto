@@ -1,0 +1,16 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Pheonix: Upload Existing Firmware",
+            "type": "shell",
+            "command": "${workspaceFolder}/tools/upload_existing_firmware.sh",
+            "problemMatcher": [],
+            "presentation": {
+                "clear": true,
+                "panel": "dedicated",
+                "reveal": "always"
+            }
+        }
+    ]
+}
