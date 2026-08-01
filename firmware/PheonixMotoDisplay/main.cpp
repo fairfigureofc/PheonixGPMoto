@@ -38,7 +38,7 @@ void drawArrowDot(int32_t x, int32_t y, uint32_t color) {
 
 void drawHorizontalArrow(bool pointsLeft, uint32_t color) {
   constexpr int32_t tipX = 42;
-  constexpr int32_t centerY = 143;
+  constexpr int32_t centerY = 137;
 
   for (int32_t step = 0; step <= 4; ++step) {
     const int32_t sourceX = tipX + step * ARROW_DOT_STEP;
@@ -66,7 +66,7 @@ void drawRightArrow(uint32_t color) {
 
 void drawStraightArrow(uint32_t color) {
   constexpr int32_t centerX = 120;
-  constexpr int32_t tipY = 99;
+  constexpr int32_t tipY = 93;
 
   for (int32_t step = 0; step <= 4; ++step) {
     const int32_t y = tipY + step * ARROW_DOT_STEP;
@@ -75,7 +75,7 @@ void drawStraightArrow(uint32_t color) {
     }
   }
 
-  for (int32_t y = 147; y <= 195; y += ARROW_DOT_STEP) {
+  for (int32_t y = 141; y <= 189; y += ARROW_DOT_STEP) {
     drawArrowDot(centerX - ARROW_DOT_STEP, y, color);
     drawArrowDot(centerX, y, color);
     drawArrowDot(centerX + ARROW_DOT_STEP, y, color);
