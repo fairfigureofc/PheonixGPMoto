@@ -51,6 +51,10 @@ longer the planned navigation hardware.
 See the [iOS prototype instructions](./ios/README.md) to build and run the current
 benchmark on a physical iPhone.
 
+The current Google Maps route-planning and walking-navigation checkpoint,
+including completed tests and known navigation failures, is recorded in
+[`docs/ios-navigation-checkpoint.md`](./docs/ios-navigation-checkpoint.md).
+
 The new ESP32 phone-to-display hello world is documented in
 [`firmware/README.md`](./firmware/README.md).
 

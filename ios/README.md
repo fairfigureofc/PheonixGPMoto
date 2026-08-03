@@ -16,6 +16,25 @@ PheonixGPMoto is continuing with an ESP32 touchscreen using the ILI9341 display
 driver (240x320, SKU E32R28T), where the application can control screen refreshes
 directly.
 
+## Google Maps setup
+
+The app uses Google Maps SDK for iOS through Swift Package Manager. The API key
+is intentionally stored outside Git.
+
+1. In Google Cloud Console, create or select a project with billing enabled.
+2. Enable **Maps SDK for iOS**.
+3. Create an API key and restrict it to iOS apps with bundle ID
+   `com.fairfigure.pheonixgpmoto`.
+4. Copy `Config/Secrets.xcconfig.example` to `Config/Secrets.xcconfig`.
+5. Replace `YOUR_GOOGLE_MAPS_API_KEY` with the restricted key.
+6. Run `xcodegen generate`, then open `PheonixGPMoto.xcodeproj`.
+
+`Secrets.xcconfig` is ignored by Git. The Ride tab supports place search,
+alternative routes, highway and toll avoidance, route previews, saved rides,
+and an experimental walking-navigation mode. The current implementation and
+field-test results are recorded in
+[`../docs/ios-navigation-checkpoint.md`](../docs/ios-navigation-checkpoint.md).
+
 ## What it does
 
 - Scans for E87, L8, X9, and LED Badge peripherals.
@@ -45,8 +64,8 @@ fixed standard luminance tables used by the working web uploader. It is now the
 default for both Face Lab and cadence tests. UIKit and Image I/O remain available
 only for size and decoder comparisons.
 
-This is a transport benchmark, not a navigation app. It deliberately excludes a
-maps SDK until the badge update cadence has been measured on real hardware.
+The archived badge tools remain available alongside the active ESP32 navigation
+prototype and Google Maps foundation.
 
 ## Open and run
 

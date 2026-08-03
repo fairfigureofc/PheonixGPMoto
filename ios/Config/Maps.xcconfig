@@ -1,0 +1,3 @@
+// Copy Secrets.xcconfig.example to Secrets.xcconfig and add your restricted key.
+GOOGLE_MAPS_API_KEY =
+#include? "Secrets.xcconfig"

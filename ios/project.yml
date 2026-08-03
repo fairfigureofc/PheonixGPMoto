@@ -6,6 +6,10 @@ options:
 settings:
   base:
     SWIFT_VERSION: "6.0"
+packages:
+  GoogleMaps:
+    url: https://github.com/googlemaps/ios-maps-sdk
+    exactVersion: 10.15.0
 targets:
   PheonixGPMoto:
     type: application
@@ -16,7 +20,14 @@ targets:
       path: PheonixGPMoto/Info.plist
       properties:
         CFBundleDisplayName: PheonixGPMoto
+        GMSApiKey: $(GOOGLE_MAPS_API_KEY)
         NSBluetoothAlwaysUsageDescription: Connect to the Pheonix Moto navigation display.
+        NSLocationWhenInUseUsageDescription: Use your location to provide turn-by-turn motorcycle navigation.
+        LSApplicationQueriesSchemes:
+          - googlechromes
+          - comgooglemaps
+        UIFileSharingEnabled: true
+        LSSupportsOpeningDocumentsInPlace: true
         UILaunchScreen: {}
         UISupportedInterfaceOrientations:
           - UIInterfaceOrientationPortrait
@@ -25,3 +36,9 @@ targets:
         DEVELOPMENT_TEAM: B76N7U8AZZ
         PRODUCT_BUNDLE_IDENTIFIER: com.fairfigure.pheonixgpmoto
         TARGETED_DEVICE_FAMILY: "1"
+    configFiles:
+      Debug: Config/Maps.xcconfig
+      Release: Config/Maps.xcconfig
+    dependencies:
+      - package: GoogleMaps
+        product: GoogleMaps
