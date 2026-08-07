@@ -1,4 +1,41 @@
-# ESP32 display hello world
+# Pheonix Moto ESP32 display firmware
+
+The primary hardware target is now the **Waveshare ESP32-S3-Knob-Touch-LCD-1.8**.
+It renders the existing BLE navigation packet on the board's round 360×360
+SH8601 AMOLED. The original E32R28T target remains available for experiments
+and for the Wokwi rectangular-screen preview.
+
+## Waveshare round display
+
+The new PlatformIO environment is `waveshare-knob-s3`. It uses the board's
+ESP32-S3, 16 MB flash, 8 MB octal PSRAM, and the official Waveshare QSPI panel
+initialization sequence.
+
+Hardware details and the panel command table come from the
+[official Waveshare wiki and demo](https://www.waveshare.com/wiki/ESP32-S3-Knob-Touch-LCD-1.8).
+The bundled SH8601 driver retains Espressif's Apache-2.0 license header.
+
+| Display signal | GPIO |
+| --- | ---: |
+| SH8601 CS | 14 |
+| QSPI clock | 13 |
+| QSPI data 0–3 | 15, 16, 17, 18 |
+| Display reset | 21 |
+| Brightness PWM | 47 |
+| Touch SDA/SCL (reserved) | 11, 12 |
+
+In VS Code, open the `firmware` folder and run **Terminal → Run Task → Pheonix:
+Build Waveshare Knob**, followed by **Pheonix: Upload Waveshare Knob**. If the
+USB serial device does not appear or upload cannot connect, unplug the USB-C
+connector at the device, rotate it 180°, and reconnect it; the board routes the
+two plug orientations to different ESP32 chips.
+
+The navigation view keeps every important element inside the round safe area:
+connection state and street at the top, dot-matrix maneuver and distance in the
+center, and time/distance remaining at the bottom. The BLE packet format and
+iPhone app remain unchanged.
+
+## Original rectangular prototype
 
 This first milestone sends one 64-byte sample navigation packet from the iPhone
 to the E32R28T over Bluetooth Low Energy. The ESP32 renders the packet locally

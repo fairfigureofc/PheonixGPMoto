@@ -2,6 +2,32 @@
     "version": "2.0.0",
     "tasks": [
         {
+            "label": "Pheonix: Build Waveshare Knob",
+            "type": "shell",
+            "command": "${userHome}/.platformio/penv/bin/platformio",
+            "args": ["run", "--environment", "waveshare-knob-s3"],
+            "problemMatcher": ["$gcc"],
+            "options": { "cwd": "${workspaceFolder}" },
+            "presentation": {
+                "clear": true,
+                "panel": "dedicated",
+                "reveal": "always"
+            }
+        },
+        {
+            "label": "Pheonix: Upload Waveshare Knob",
+            "type": "shell",
+            "command": "${userHome}/.platformio/penv/bin/platformio",
+            "args": ["run", "--target", "upload", "--environment", "waveshare-knob-s3"],
+            "problemMatcher": ["$gcc"],
+            "options": { "cwd": "${workspaceFolder}" },
+            "presentation": {
+                "clear": true,
+                "panel": "dedicated",
+                "reveal": "always"
+            }
+        },
+        {
             "label": "Pheonix: Upload Existing Firmware",
             "type": "shell",
             "command": "${workspaceFolder}/tools/upload_existing_firmware.sh",

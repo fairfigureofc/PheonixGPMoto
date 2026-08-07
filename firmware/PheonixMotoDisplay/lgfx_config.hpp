@@ -8,6 +8,8 @@ class PheonixDisplay : public lgfx::LGFX_Device {
   lgfx::Light_PWM backlight;
 
  public:
+  void flush() {}
+
   PheonixDisplay() {
     {
       auto config = bus.config();
