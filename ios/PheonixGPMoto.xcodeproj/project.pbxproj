@@ -7,34 +7,65 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0DC17A93ABEBC5F6E706C07E /* NavigationPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4B8435027BE52C9DC114B49 /* NavigationPacket.swift */; };
+		1A5D544F620038C9AD4079F6 /* ESP32BluetoothClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F93BF4176E0970DDE7C8B1 /* ESP32BluetoothClient.swift */; };
+		1F432E2F5234472768143329 /* ESP32DemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0580407AD81E9F3CBF7A4390 /* ESP32DemoView.swift */; };
 		2738A291A7EED148240BBE51 /* BadgeFaceLabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE7FA9081481969C186179B4 /* BadgeFaceLabView.swift */; };
 		2DBA4CAC9CCCB5CB33175F59 /* E87Codec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7488F4952B79883CE239DE61 /* E87Codec.swift */; };
+		352EC1784819FFA0210EF008 /* GoogleMaps in Frameworks */ = {isa = PBXBuildFile; productRef = A4C7522BC826336163A669BA /* GoogleMaps */; };
 		49B266A243AF842946DAA93D /* JieliTables.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25477AC47C8BD926337A1C63 /* JieliTables.generated.swift */; };
+		52D4EEC00EEF67961B26C5AE /* PlacesAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B8E2A1DEAA04101C8F7D530 /* PlacesAPIClient.swift */; };
 		62949B47137A18A652BD4F37 /* NavigationRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2D9321B35C3AC955B0FD33E /* NavigationRenderer.swift */; };
+		68CB652926550DEB6629CEB4 /* MapsHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E45BBAA57A126ACA8AC4E1B7 /* MapsHomeView.swift */; };
 		71F38CF94FCEB06CB17C64FB /* PheonixGPMotoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F0D76FF9CAF498BF5DE304 /* PheonixGPMotoApp.swift */; };
+		762406402DDF8913124DE1D5 /* PlaceSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CB1090B5545273AF19988A0 /* PlaceSearchView.swift */; };
 		7DEFA8B34F1B18C81F83B711 /* BadgeCompatibleJPEGEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F81CA8C8836641EAB61F4E3 /* BadgeCompatibleJPEGEncoder.swift */; };
 		93710FCBC6826DC0E767B5CB /* BenchmarkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B358945E81CBF7E1660C5F /* BenchmarkModel.swift */; };
+		9AD6B70179CF343E861106FB /* RoutesAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED840329DB9C0AC23E5F92D /* RoutesAPIClient.swift */; };
+		A10000000000000000000001 /* WalkingNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000002 /* WalkingNavigationView.swift */; };
 		A24C35C53C5FBE3870046240 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C271E9699E02907E7FCFC1 /* ContentView.swift */; };
 		A6892FE4473B0A038EEE6548 /* JieliAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC942F9269E93FD6032E8532 /* JieliAuth.swift */; };
+		C8555947D5CC99DDF06B41FF /* RidePlannerModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2134F5940A1363559C6F893D /* RidePlannerModels.swift */; };
 		D931E13D7CE07388D6C4DBCD /* E87BluetoothClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8F2BA57930E8BE52FBE738 /* E87BluetoothClient.swift */; };
 		F5B2844E0A45577ECAA2E844 /* BenchmarkMetric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69D24624BF0716B4B450DE12 /* BenchmarkMetric.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0580407AD81E9F3CBF7A4390 /* ESP32DemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ESP32DemoView.swift; sourceTree = "<group>"; };
+		2134F5940A1363559C6F893D /* RidePlannerModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RidePlannerModels.swift; sourceTree = "<group>"; };
 		25477AC47C8BD926337A1C63 /* JieliTables.generated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JieliTables.generated.swift; sourceTree = "<group>"; };
+		2B8E2A1DEAA04101C8F7D530 /* PlacesAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesAPIClient.swift; sourceTree = "<group>"; };
 		3C3D4342EB375FFB53E599B8 /* PheonixGPMoto.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = PheonixGPMoto.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3ED840329DB9C0AC23E5F92D /* RoutesAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutesAPIClient.swift; sourceTree = "<group>"; };
+		A10000000000000000000002 /* WalkingNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalkingNavigationView.swift; sourceTree = "<group>"; };
 		57B358945E81CBF7E1660C5F /* BenchmarkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenchmarkModel.swift; sourceTree = "<group>"; };
 		69D24624BF0716B4B450DE12 /* BenchmarkMetric.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenchmarkMetric.swift; sourceTree = "<group>"; };
 		7488F4952B79883CE239DE61 /* E87Codec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = E87Codec.swift; sourceTree = "<group>"; };
 		771D6D826D90320612AC431F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		79F93BF4176E0970DDE7C8B1 /* ESP32BluetoothClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ESP32BluetoothClient.swift; sourceTree = "<group>"; };
 		7C8F2BA57930E8BE52FBE738 /* E87BluetoothClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = E87BluetoothClient.swift; sourceTree = "<group>"; };
 		8F81CA8C8836641EAB61F4E3 /* BadgeCompatibleJPEGEncoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeCompatibleJPEGEncoder.swift; sourceTree = "<group>"; };
+		97054169EEA0C117A41CBDDE /* Maps.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Maps.xcconfig; sourceTree = "<group>"; };
+		9CB1090B5545273AF19988A0 /* PlaceSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceSearchView.swift; sourceTree = "<group>"; };
+		A4B8435027BE52C9DC114B49 /* NavigationPacket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationPacket.swift; sourceTree = "<group>"; };
 		AE7FA9081481969C186179B4 /* BadgeFaceLabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeFaceLabView.swift; sourceTree = "<group>"; };
 		C1F0D76FF9CAF498BF5DE304 /* PheonixGPMotoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PheonixGPMotoApp.swift; sourceTree = "<group>"; };
 		CC942F9269E93FD6032E8532 /* JieliAuth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JieliAuth.swift; sourceTree = "<group>"; };
 		D2D9321B35C3AC955B0FD33E /* NavigationRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationRenderer.swift; sourceTree = "<group>"; };
 		D7C271E9699E02907E7FCFC1 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		E45BBAA57A126ACA8AC4E1B7 /* MapsHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapsHomeView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		EEC586A6E5A4933BEB2749DC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				352EC1784819FFA0210EF008 /* GoogleMaps in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		0C7155512026BF195E0DA6E0 /* PheonixGPMoto */ = {
@@ -47,11 +78,20 @@
 				D7C271E9699E02907E7FCFC1 /* ContentView.swift */,
 				7C8F2BA57930E8BE52FBE738 /* E87BluetoothClient.swift */,
 				7488F4952B79883CE239DE61 /* E87Codec.swift */,
+				79F93BF4176E0970DDE7C8B1 /* ESP32BluetoothClient.swift */,
+				0580407AD81E9F3CBF7A4390 /* ESP32DemoView.swift */,
 				771D6D826D90320612AC431F /* Info.plist */,
 				CC942F9269E93FD6032E8532 /* JieliAuth.swift */,
 				25477AC47C8BD926337A1C63 /* JieliTables.generated.swift */,
+				E45BBAA57A126ACA8AC4E1B7 /* MapsHomeView.swift */,
+				A4B8435027BE52C9DC114B49 /* NavigationPacket.swift */,
 				D2D9321B35C3AC955B0FD33E /* NavigationRenderer.swift */,
 				C1F0D76FF9CAF498BF5DE304 /* PheonixGPMotoApp.swift */,
+				2B8E2A1DEAA04101C8F7D530 /* PlacesAPIClient.swift */,
+				9CB1090B5545273AF19988A0 /* PlaceSearchView.swift */,
+				2134F5940A1363559C6F893D /* RidePlannerModels.swift */,
+				3ED840329DB9C0AC23E5F92D /* RoutesAPIClient.swift */,
+				A10000000000000000000002 /* WalkingNavigationView.swift */,
 			);
 			path = PheonixGPMoto;
 			sourceTree = "<group>";
@@ -59,6 +99,7 @@
 		28639695815A31898F64A0FA = {
 			isa = PBXGroup;
 			children = (
+				FA02DFAABEAD7BAA9F2F6662 /* Config */,
 				0C7155512026BF195E0DA6E0 /* PheonixGPMoto */,
 				C401A3BF502ABD8AE8CAD73B /* Products */,
 			);
@@ -72,6 +113,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		FA02DFAABEAD7BAA9F2F6662 /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				97054169EEA0C117A41CBDDE /* Maps.xcconfig */,
+			);
+			path = Config;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -80,6 +129,7 @@
 			buildConfigurationList = 287DA751AB44510BF1E5F7B9 /* Build configuration list for PBXNativeTarget "PheonixGPMoto" */;
 			buildPhases = (
 				E72DD57D7A881E62A22FA398 /* Sources */,
+				EEC586A6E5A4933BEB2749DC /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -87,6 +137,7 @@
 			);
 			name = PheonixGPMoto;
 			packageProductDependencies = (
+				A4C7522BC826336163A669BA /* GoogleMaps */,
 			);
 			productName = PheonixGPMoto;
 			productReference = 3C3D4342EB375FFB53E599B8 /* PheonixGPMoto.app */;
@@ -115,6 +166,9 @@
 			);
 			mainGroup = 28639695815A31898F64A0FA;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				48AB7F4030064FC509218DA1 /* XCRemoteSwiftPackageReference "ios-maps-sdk" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = C401A3BF502ABD8AE8CAD73B /* Products */;
 			projectDirPath = "";
@@ -137,10 +191,19 @@
 				A24C35C53C5FBE3870046240 /* ContentView.swift in Sources */,
 				D931E13D7CE07388D6C4DBCD /* E87BluetoothClient.swift in Sources */,
 				2DBA4CAC9CCCB5CB33175F59 /* E87Codec.swift in Sources */,
+				1A5D544F620038C9AD4079F6 /* ESP32BluetoothClient.swift in Sources */,
+				1F432E2F5234472768143329 /* ESP32DemoView.swift in Sources */,
 				A6892FE4473B0A038EEE6548 /* JieliAuth.swift in Sources */,
 				49B266A243AF842946DAA93D /* JieliTables.generated.swift in Sources */,
+				68CB652926550DEB6629CEB4 /* MapsHomeView.swift in Sources */,
+				0DC17A93ABEBC5F6E706C07E /* NavigationPacket.swift in Sources */,
 				62949B47137A18A652BD4F37 /* NavigationRenderer.swift in Sources */,
 				71F38CF94FCEB06CB17C64FB /* PheonixGPMotoApp.swift in Sources */,
+				762406402DDF8913124DE1D5 /* PlaceSearchView.swift in Sources */,
+				52D4EEC00EEF67961B26C5AE /* PlacesAPIClient.swift in Sources */,
+				C8555947D5CC99DDF06B41FF /* RidePlannerModels.swift in Sources */,
+				9AD6B70179CF343E861106FB /* RoutesAPIClient.swift in Sources */,
+				A10000000000000000000001 /* WalkingNavigationView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -149,6 +212,7 @@
 /* Begin XCBuildConfiguration section */
 		1845DE8BBEBA18924243DB9B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 97054169EEA0C117A41CBDDE /* Maps.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -285,6 +349,7 @@
 		};
 		D61995A815CA162EED5326DF /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 97054169EEA0C117A41CBDDE /* Maps.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -322,6 +387,25 @@
 			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		48AB7F4030064FC509218DA1 /* XCRemoteSwiftPackageReference "ios-maps-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/googlemaps/ios-maps-sdk";
+			requirement = {
+				kind = exactVersion;
+				version = 10.15.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A4C7522BC826336163A669BA /* GoogleMaps */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 48AB7F4030064FC509218DA1 /* XCRemoteSwiftPackageReference "ios-maps-sdk" */;
+			productName = GoogleMaps;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 1BC37CFDAB15B111956679E4 /* Project object */;
 }

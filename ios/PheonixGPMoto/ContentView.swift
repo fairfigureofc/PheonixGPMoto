@@ -11,6 +11,16 @@ struct ContentView: View {
 
     var body: some View {
         TabView {
+            MapsHomeView()
+                .tabItem {
+                    Label("Ride", systemImage: "map")
+                }
+
+            ESP32DemoView()
+                .tabItem {
+                    Label("ESP32 Demo", systemImage: "display")
+                }
+
             benchmarkView
                 .tabItem {
                     Label("BLE Bench", systemImage: "antenna.radiowaves.left.and.right")

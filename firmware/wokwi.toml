@@ -1,0 +1,5 @@
+[wokwi]
+version = 1
+firmware = '.pio/build/e32r28t/firmware.bin'
+elf = '.pio/build/e32r28t/firmware.elf'
+gdbServerPort = 3333

@@ -30,12 +30,22 @@ __pycache__/
 
 # Editor / OS
 .DS_Store
+ios/Config/Secrets.xcconfig
 *.bak
 *.orig
 *.swp
 .idea/
 .vscode/
+!firmware/.vscode/
+firmware/.vscode/*
+!firmware/.vscode/settings.json
+!firmware/.vscode/tasks.json
 
 # Xcode user state
 xcuserdata/
 *.xcuserstate
+.derived-data/
+.swift-module-cache/
+
+# PlatformIO
+.pio/
