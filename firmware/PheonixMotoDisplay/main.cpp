@@ -43,6 +43,10 @@ constexpr int32_t ARROW_CENTER_Y = 151;
 constexpr int32_t ARROW_SHAFT_START = 122;
 constexpr int32_t ARROW_SHAFT_END = 262;
 constexpr int32_t STRAIGHT_TIP_Y = 95;
+constexpr uint8_t BATTERY_ADC_PIN = 1;
+constexpr uint32_t BATTERY_SAMPLE_INTERVAL_MS = 30000;
+uint8_t batteryBars = 0;
+uint32_t lastBatterySampleMs = 0;
 #else
 constexpr int32_t DISPLAY_SIZE = 240;
 constexpr int32_t DISPLAY_CENTER = 120;
@@ -53,6 +57,45 @@ constexpr int32_t ARROW_CENTER_Y = 137;
 constexpr int32_t ARROW_SHAFT_START = 66;
 constexpr int32_t ARROW_SHAFT_END = 186;
 constexpr int32_t STRAIGHT_TIP_Y = 93;
+#endif
+
+#if defined(PHEONIX_WAVESHARE_KNOB)
+uint32_t readBatteryMillivolts() {
+  uint32_t sampleTotal = 0;
+  constexpr uint8_t SAMPLE_COUNT = 8;
+  for (uint8_t sample = 0; sample < SAMPLE_COUNT; ++sample) {
+    sampleTotal += analogReadMilliVolts(BATTERY_ADC_PIN);
+  }
+
+  // Waveshare's battery/system-voltage input uses a 2:1 divider.
+  return (sampleTotal / SAMPLE_COUNT) * 2;
+}
+
+uint8_t batteryBarCount(uint32_t millivolts) {
+  if (millivolts >= 3900) return 3;
+  if (millivolts >= 3700) return 2;
+  if (millivolts >= 3400) return 1;
+  return 0;
+}
+
+void drawBluetoothIcon(int32_t x, int32_t y, uint32_t color) {
+  display.drawFastVLine(x + 4, y, 15, color);
+  display.drawLine(x + 4, y, x + 9, y + 4, color);
+  display.drawLine(x + 9, y + 4, x + 1, y + 11, color);
+  display.drawLine(x + 1, y + 4, x + 9, y + 11, color);
+  display.drawLine(x + 9, y + 11, x + 4, y + 15, color);
+}
+
+void drawBatteryBars(int32_t x, int32_t baselineY, uint32_t activeColor,
+                     uint32_t inactiveColor) {
+  constexpr int32_t HEIGHTS[] = {4, 7, 10};
+  for (uint8_t bar = 0; bar < 3; ++bar) {
+    const uint32_t color = bar < batteryBars ? activeColor : inactiveColor;
+    const int32_t top = baselineY - HEIGHTS[bar] + 1;
+    display.drawFastVLine(x + bar * 5, top, HEIGHTS[bar], color);
+    display.drawFastVLine(x + bar * 5 + 1, top, HEIGHTS[bar], color);
+  }
+}
 #endif
 
 void drawArrowDot(int32_t x, int32_t y, uint32_t color) {
@@ -110,6 +153,39 @@ String fittedRoadName(const String& roadName, int32_t maximumWidth) {
   return fitted + "...";
 }
 
+#if defined(PHEONIX_WAVESHARE_KNOB)
+struct HeaderLines {
+  String first;
+  String second;
+};
+
+HeaderLines wrappedHeader(const String& instruction, int32_t maximumWidth) {
+  if (display.textWidth(instruction) <= maximumWidth) {
+    return {instruction, ""};
+  }
+
+  HeaderLines best = {fittedRoadName(instruction, maximumWidth), ""};
+  int32_t bestBalance = INT32_MAX;
+  for (uint32_t index = 1; index + 1 < instruction.length(); ++index) {
+    if (instruction.charAt(index) != ' ') continue;
+
+    const String first = instruction.substring(0, index);
+    const String second = instruction.substring(index + 1);
+    const int32_t firstWidth = display.textWidth(first);
+    const int32_t secondWidth = display.textWidth(second);
+    if (firstWidth > maximumWidth || secondWidth > maximumWidth) continue;
+
+    const int32_t balance = abs(firstWidth - secondWidth);
+    if (balance < bestBalance) {
+      best = {first, second};
+      bestBalance = balance;
+    }
+  }
+
+  return best;
+}
+#endif
+
 void drawNavigation() {
   const uint32_t background = navigation.lightMode ? 0xF7F7F0 : 0x050505;
   const uint32_t foreground = navigation.lightMode ? 0x050505 : 0xF7F7F0;
@@ -120,9 +196,17 @@ void drawNavigation() {
   display.setFont(&pheonix::fonts::FragmentMonoMedium);
   display.setTextSize(1);
 #if defined(PHEONIX_WAVESHARE_KNOB)
-  display.drawString(connected ? "BLE+" : "BLE", DISPLAY_CENTER, 15);
-  display.drawString(fittedRoadName(navigation.roadName, 252), DISPLAY_CENTER, 40);
-  display.drawFastHLine(54, 77, 252, foreground);
+  const uint32_t inactive = navigation.lightMode ? 0xB8B8B0 : 0x4A4A4A;
+  drawBluetoothIcon(163, 14, connected ? foreground : inactive);
+  drawBatteryBars(186, 29, foreground, inactive);
+  const HeaderLines header = wrappedHeader(navigation.roadName, 252);
+  if (header.second.isEmpty()) {
+    display.drawString(header.first, DISPLAY_CENTER, 42);
+  } else {
+    display.drawString(header.first, DISPLAY_CENTER, 32);
+    display.drawString(header.second, DISPLAY_CENTER, 52);
+  }
+  display.drawFastHLine(54, 80, 252, foreground);
 #else
   display.drawString(navigation.roadName, 120, 22);
   display.drawFastHLine(16, 58, 208, foreground);
@@ -211,6 +295,12 @@ void setup() {
   }
   display.setRotation(0);
   display.setBrightness(180);
+#if defined(PHEONIX_WAVESHARE_KNOB)
+  analogReadResolution(12);
+  analogSetPinAttenuation(BATTERY_ADC_PIN, ADC_11db);
+  batteryBars = batteryBarCount(readBatteryMillivolts());
+  lastBatterySampleMs = millis();
+#endif
   drawNavigation();
 
   BLEDevice::init(DEVICE_NAME);
@@ -231,5 +321,16 @@ void setup() {
 }
 
 void loop() {
+#if defined(PHEONIX_WAVESHARE_KNOB)
+  const uint32_t now = millis();
+  if (now - lastBatterySampleMs >= BATTERY_SAMPLE_INTERVAL_MS) {
+    lastBatterySampleMs = now;
+    const uint8_t nextBatteryBars = batteryBarCount(readBatteryMillivolts());
+    if (nextBatteryBars != batteryBars) {
+      batteryBars = nextBatteryBars;
+      drawNavigation();
+    }
+  }
+#endif
   delay(1000);
 }

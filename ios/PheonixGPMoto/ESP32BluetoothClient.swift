@@ -14,6 +14,9 @@ final class ESP32BluetoothClient: NSObject, ObservableObject {
     private var central: CBCentralManager!
     private var peripheral: CBPeripheral?
     private var navigationCharacteristic: CBCharacteristic?
+    private var shouldAutoConnect = false
+    private var isWriteInFlight = false
+    private var pendingPacket: NavigationPacket?
 
     override init() {
         super.init()
@@ -30,6 +33,20 @@ final class ESP32BluetoothClient: NSObject, ObservableObject {
         central.scanForPeripherals(withServices: [serviceUUID])
     }
 
+    func startAutoConnect() {
+        shouldAutoConnect = true
+        if isConnected {
+            return
+        }
+        scan()
+    }
+
+    func stop() {
+        shouldAutoConnect = false
+        central.stopScan()
+        pendingPacket = nil
+    }
+
     func connect(_ target: CBPeripheral) {
         central.stopScan()
         peripheral = target
@@ -40,10 +57,14 @@ final class ESP32BluetoothClient: NSObject, ObservableObject {
 
     func send(_ packet: NavigationPacket) {
         guard let peripheral, let characteristic = navigationCharacteristic else {
-            state = "Connect to the ESP32 first"
+            return
+        }
+        guard !isWriteInFlight else {
+            pendingPacket = packet
             return
         }
         let payload = packet.encoded()
+        isWriteInFlight = true
         peripheral.writeValue(payload, for: characteristic, type: .withResponse)
         lastSend = "Sent sequence \(packet.sequence): \(packet.roadName), \(packet.distanceToTurnMeters) m"
     }
@@ -52,6 +73,9 @@ final class ESP32BluetoothClient: NSObject, ObservableObject {
 extension ESP32BluetoothClient: @MainActor CBCentralManagerDelegate {
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
         state = central.state == .poweredOn ? "Ready to scan" : "Bluetooth unavailable"
+        if central.state == .poweredOn, shouldAutoConnect {
+            scan()
+        }
     }
 
     func centralManager(
@@ -62,6 +86,9 @@ extension ESP32BluetoothClient: @MainActor CBCentralManagerDelegate {
     ) {
         guard !discovered.contains(where: { $0.identifier == peripheral.identifier }) else { return }
         discovered.append(peripheral)
+        if shouldAutoConnect, self.peripheral == nil {
+            connect(peripheral)
+        }
     }
 
     func centralManager(_: CBCentralManager, didConnect peripheral: CBPeripheral) {
@@ -70,13 +97,27 @@ extension ESP32BluetoothClient: @MainActor CBCentralManagerDelegate {
     }
 
     func centralManager(_: CBCentralManager, didFailToConnect _: CBPeripheral, error: Error?) {
+        peripheral = nil
         state = error?.localizedDescription ?? "Connection failed"
+        reconnectIfNeeded()
     }
 
     func centralManager(_: CBCentralManager, didDisconnectPeripheral _: CBPeripheral, error _: Error?) {
+        peripheral = nil
         navigationCharacteristic = nil
         isConnected = false
+        isWriteInFlight = false
         state = "Disconnected"
+        reconnectIfNeeded()
+    }
+
+    private func reconnectIfNeeded() {
+        guard shouldAutoConnect, central.state == .poweredOn else { return }
+        Task { @MainActor [weak self] in
+            try? await Task.sleep(for: .seconds(1))
+            guard let self, shouldAutoConnect, !self.isConnected else { return }
+            scan()
+        }
     }
 }
 
@@ -99,5 +140,15 @@ extension ESP32BluetoothClient: @MainActor CBPeripheralDelegate {
         navigationCharacteristic = service.characteristics?.first(where: { $0.uuid == navigationUUID })
         isConnected = navigationCharacteristic != nil
         state = isConnected ? "Connected to Pheonix Moto" : "Navigation characteristic missing"
+    }
+
+    func peripheral(_: CBPeripheral, didWriteValueFor _: CBCharacteristic, error: Error?) {
+        isWriteInFlight = false
+        if let error {
+            state = "Display update failed: \(error.localizedDescription)"
+        }
+        guard let pendingPacket else { return }
+        self.pendingPacket = nil
+        send(pendingPacket)
     }
 }

@@ -28,6 +28,7 @@ struct RouteOption: Identifiable, Equatable, Sendable {
     let encodedPolyline: String
     let isDefault: Bool
     let steps: [RouteStep]
+    let travelMode: RouteTravelMode
 
     var distanceText: String {
         Measurement(value: Double(distanceMeters), unit: UnitLength.meters)
@@ -40,6 +41,18 @@ struct RouteOption: Identifiable, Equatable, Sendable {
         formatter.allowedUnits = durationSeconds >= 3600 ? [.hour, .minute] : [.minute]
         formatter.unitsStyle = .abbreviated
         return formatter.string(from: TimeInterval(durationSeconds)) ?? "—"
+    }
+}
+
+enum RouteTravelMode: String, Codable, Equatable, Sendable {
+    case drive = "DRIVE"
+    case walk = "WALK"
+
+    var label: String {
+        switch self {
+        case .drive: "Motorcycle"
+        case .walk: "Walking test"
+        }
     }
 }
 
@@ -98,6 +111,7 @@ struct SavedRide: Codable, Identifiable, Sendable {
     let avoidTolls: Bool
     let savedAt: Date
     var description: String?
+    var walkingTest: Bool?
 }
 
 @MainActor
@@ -131,6 +145,7 @@ final class RidePlannerModel {
     var destination: RidePlace?
     var avoidHighways = false
     var avoidTolls = false
+    var walkingTest = false
     var routes: [RouteOption] = []
     var selectedRouteID: String?
     var isLoading = false
@@ -165,6 +180,7 @@ final class RidePlannerModel {
                 destination: destination.coordinate,
                 avoidHighways: avoidHighways,
                 avoidTolls: avoidTolls,
+                travelMode: walkingTest ? .walk : .drive,
                 apiKey: apiKey
             )
             selectedRouteID = routes.first?.id
@@ -187,7 +203,8 @@ final class RidePlannerModel {
             avoidHighways: avoidHighways,
             avoidTolls: avoidTolls,
             savedAt: Date(),
-            description: description.trimmingCharacters(in: .whitespacesAndNewlines).nilIfEmpty
+            description: description.trimmingCharacters(in: .whitespacesAndNewlines).nilIfEmpty,
+            walkingTest: walkingTest
         )
         savedRides.insert(savedRide, at: 0)
         SavedRideStore.save(savedRides)
@@ -199,6 +216,7 @@ final class RidePlannerModel {
         destination = ride.destination
         avoidHighways = ride.avoidHighways
         avoidTolls = ride.avoidTolls
+        walkingTest = ride.walkingTest ?? false
         routes = []
         selectedRouteID = nil
     }

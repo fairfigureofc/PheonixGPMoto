@@ -28,6 +28,10 @@ targets:
           - comgooglemaps
         UIFileSharingEnabled: true
         LSSupportsOpeningDocumentsInPlace: true
+        UIBackgroundModes:
+          - audio
+          - bluetooth-central
+          - location
         UILaunchScreen: {}
         UISupportedInterfaceOrientations:
           - UIInterfaceOrientationPortrait

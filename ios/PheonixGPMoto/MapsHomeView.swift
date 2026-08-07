@@ -87,7 +87,8 @@ struct MapsHomeView: View {
                     initialRoute: route,
                     destination: destination,
                     avoidHighways: planner.avoidHighways,
-                    avoidTolls: planner.avoidTolls
+                    avoidTolls: planner.avoidTolls,
+                    travelMode: route.travelMode
                 )
             }
         }
@@ -201,6 +202,10 @@ struct MapsHomeView: View {
             .font(.caption)
             .onChange(of: planner.avoidHighways) { clearCalculatedRoutes() }
             .onChange(of: planner.avoidTolls) { clearCalculatedRoutes() }
+
+            Toggle("Walking test", isOn: $planner.walkingTest)
+                .font(.caption)
+                .onChange(of: planner.walkingTest) { clearCalculatedRoutes() }
 
             if planner.routes.isEmpty {
                 Button {
@@ -432,6 +437,7 @@ private struct RoutePreviewView: View {
                     LabeledContent("To", value: destination.name)
                     LabeledContent("Ride time", value: route.durationText)
                     LabeledContent("Distance", value: route.distanceText)
+                    LabeledContent("Mode", value: route.travelMode.label)
                 }
 
                 Section("Ride notes") {

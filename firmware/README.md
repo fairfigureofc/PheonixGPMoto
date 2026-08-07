@@ -30,10 +30,13 @@ USB serial device does not appear or upload cannot connect, unplug the USB-C
 connector at the device, rotate it 180°, and reconnect it; the board routes the
 two plug orientations to different ESP32 chips.
 
-The navigation view keeps every important element inside the round safe area:
-connection state and street at the top, dot-matrix maneuver and distance in the
-center, and time/distance remaining at the bottom. The BLE packet format and
-iPhone app remain unchanged.
+The navigation view keeps every important element inside the round safe area: a
+small Bluetooth glyph and three-line battery gauge sit above the street name,
+long instructions wrap across two static lines without distracting animation,
+the dot-matrix maneuver and distance stay in the center, and time/distance
+remaining sit at the bottom. The battery gauge reads the board's divided GPIO 1
+system-voltage input every 30 seconds. The BLE packet format and iPhone app
+remain unchanged.
 
 ## Original rectangular prototype
 

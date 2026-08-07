@@ -7,6 +7,8 @@ enum RoutesAPIClient {
         destination: CLLocationCoordinate2D,
         avoidHighways: Bool,
         avoidTolls: Bool,
+        travelMode: RouteTravelMode,
+        originHeading: Int? = nil,
         apiKey: String
     ) async throws -> [RouteOption] {
         let endpoint = URL(string: "https://routes.googleapis.com/directions/v2:computeRoutes")!
@@ -23,12 +25,20 @@ enum RoutesAPIClient {
         }
 
         let body = ComputeRoutesRequest(
-            origin: .init(location: .init(latLng: .init(latitude: origin.latitude, longitude: origin.longitude))),
+            origin: .init(
+                location: .init(
+                    latLng: .init(latitude: origin.latitude, longitude: origin.longitude),
+                    heading: travelMode == .drive ? originHeading : nil
+                )
+            ),
             destination: .init(location: .init(latLng: .init(latitude: destination.latitude, longitude: destination.longitude))),
-            travelMode: "DRIVE",
-            routingPreference: "TRAFFIC_AWARE",
+            travelMode: travelMode.rawValue,
+            routingPreference: travelMode == .drive ? "TRAFFIC_AWARE" : nil,
             computeAlternativeRoutes: true,
-            routeModifiers: .init(avoidTolls: avoidTolls, avoidHighways: avoidHighways),
+            routeModifiers: .init(
+                avoidTolls: travelMode == .drive && avoidTolls,
+                avoidHighways: travelMode == .drive && avoidHighways
+            ),
             units: "IMPERIAL"
         )
         request.httpBody = try JSONEncoder().encode(body)
@@ -49,7 +59,7 @@ enum RoutesAPIClient {
                 distanceMeters: route.distanceMeters,
                 durationSeconds: parseDuration(route.duration),
                 encodedPolyline: route.polyline.encodedPolyline,
-                isDefault: route.routeLabels.contains("DEFAULT_ROUTE"),
+                isDefault: (route.routeLabels?.contains("DEFAULT_ROUTE") ?? false) || index == 0,
                 steps: route.legs.flatMap(\.steps).enumerated().map { stepIndex, step in
                     RouteStep(
                         id: "route-\(index)-step-\(stepIndex)",
@@ -60,7 +70,8 @@ enum RoutesAPIClient {
                         endLatitude: step.endLocation.latLng.latitude,
                         endLongitude: step.endLocation.latLng.longitude
                     )
-                }
+                },
+                travelMode: travelMode
             )
         }
     }
@@ -79,6 +90,12 @@ private struct ComputeRoutesRequest: Encodable, Sendable {
             }
 
             let latLng: LatLng
+            let heading: Int?
+
+            init(latLng: LatLng, heading: Int? = nil) {
+                self.latLng = latLng
+                self.heading = heading
+            }
         }
 
         let location: Location
@@ -92,7 +109,7 @@ private struct ComputeRoutesRequest: Encodable, Sendable {
     let origin: Waypoint
     let destination: Waypoint
     let travelMode: String
-    let routingPreference: String
+    let routingPreference: String?
     let computeAlternativeRoutes: Bool
     let routeModifiers: RouteModifiers
     let units: String
@@ -133,7 +150,7 @@ private struct ComputeRoutesResponse: Decodable, Sendable {
             let steps: [Step]
         }
 
-        let routeLabels: [String]
+        let routeLabels: [String]?
         let distanceMeters: Int
         let duration: String
         let polyline: Polyline
